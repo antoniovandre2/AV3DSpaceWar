@@ -56,7 +56,7 @@ public class AV3DSpaceWar extends JComponent
     public static double TetaMax = Double.MAX_VALUE; // Opção: Math.PI / 3.
     public static double PhiMax = Double.MAX_VALUE; // Opção: Math.PI / 3.
     public static double MargemAnguloVisao = 1; // Default: 1.
-    public static double MargemPhiProdutoEscalarNegativo = Math.PI / 2; // Default: Math.PI / 2.
+    public static double MargemPhiProdutoEscalarNegativo = 5 * Math.PI / 12; // Default: 5 * Math.PI / 12.
     public double Velocidade = 50; // Default inicial: 50.
     public static double LimiteSuperiorVelocidade = 100; // Default: 100.
     public static double LimiteInferiorVelocidade = 10; // Default: 10.
@@ -299,7 +299,7 @@ public class AV3DSpaceWar extends JComponent
         JLabel LabelDistancia = new JLabel("");
 
         if (FlagPausa == 0)
-            LabelStatus = new GradientLabel("<html>&nbsp;Pontuação = " + String.valueOf(Pontuacao) + ".<br><br>&nbsp;Velocidade = " + String.valueOf(Velocidade) + "<br><br>&nbsp;\"S\" para atirar.<br><br>&nbsp;Setas para direcionar.<br><br>&nbsp;\"A\" para aumentar velocidade. \"Z\" para reduzir.<br><br>&nbsp;\"P\" para pausar.<br><br>&nbsp;Barra de espaço para resetar as<br>&nbsp;variáveis de localização.<br><br>&nbsp;ESC para sair.</html>", new Color(0,100,0), Color.BLACK, Color.WHITE);
+            LabelStatus = new GradientLabel("<html>&nbsp;Pontuação = " + String.valueOf(Pontuacao) + ".<br><br>&nbsp;Velocidade = " + String.valueOf(Velocidade) + "<br><br>&nbsp;\"S\" para atirar.<br><br>&nbsp;Setas para direcionar, Shift para precisão.<br><br>&nbsp;\"A\" para aumentar velocidade. \"Z\" para reduzir.<br><br>&nbsp;\"P\" para pausar.<br><br>&nbsp;Barra de espaço para resetar as<br>&nbsp;variáveis de localização.<br><br>&nbsp;ESC para sair.</html>", new Color(0,100,0), Color.BLACK, Color.WHITE);
         else
             LabelStatus = new GradientLabel("<html>&nbsp;Pontuação: " + String.valueOf(Pontuacao) + ".<br><br>&nbsp;Jogo pausado.<br><br>&nbsp;Aperte \"P\" para continuar.</html>", new Color(0,100,0), Color.BLACK, Color.WHITE);
 
@@ -366,16 +366,16 @@ public class AV3DSpaceWar extends JComponent
                     {TipoAlvo++; TipoAlvo %= 2;}
 
                 if (keyCode == KeyEvent.VK_UP) if (FlagPausa == 0) 
-                    {Phi += DeslocamentoAngular;}
+                    {if (ke.isShiftDown()) {Phi += DeslocamentoAngular / 10;} else {Phi += DeslocamentoAngular;}}
 
                 if (keyCode == KeyEvent.VK_DOWN) if (FlagPausa == 0) 
-                    {Phi -= DeslocamentoAngular;}
+                    {if (ke.isShiftDown()) {Phi -= DeslocamentoAngular / 10;} else {Phi -= DeslocamentoAngular;}}
 
                 if (keyCode == KeyEvent.VK_LEFT) if (FlagPausa == 0) 
-                    {Teta += DeslocamentoAngular * Math.signum(Math.cos(Phi));}
+                    {if (ke.isShiftDown()) {Teta += DeslocamentoAngular / 10 * Math.signum(Math.cos(Phi));} else Teta += DeslocamentoAngular * Math.signum(Math.cos(Phi));}
 
                 if (keyCode == KeyEvent.VK_RIGHT) if (FlagPausa == 0) 
-                    {Teta -= DeslocamentoAngular * Math.signum(Math.cos(Phi));}
+                    {if (ke.isShiftDown()) {Teta -= DeslocamentoAngular / 10 * Math.signum(Math.cos(Phi));} else {Teta -= DeslocamentoAngular * Math.signum(Math.cos(Phi));}}
 
                 if (keyCode == KeyEvent.VK_S) if (FlagPausa == 0)
                     {
@@ -629,7 +629,7 @@ public class AV3DSpaceWar extends JComponent
                 }
 
             if (FlagPausa == 0)
-                LabelStatus.setText("<html>&nbsp;Pontuação = " + String.valueOf(Pontuacao) + ".<br><br>&nbsp;Velocidade = " + String.valueOf(Velocidade) + "<br><br>&nbsp;\"S\" para atirar.<br><br>&nbsp;Setas para direcionar.<br><br>&nbsp;\"A\" para aumentar velocidade. \"Z\" para reduzir.<br><br>&nbsp;\"P\" para pausar.<br><br>&nbsp;Barra de espaço para resetar as<br>&nbsp;variáveis de localização.<br><br>&nbsp;ESC para sair.</html>");
+                LabelStatus.setText("<html>&nbsp;Pontuação = " + String.valueOf(Pontuacao) + ".<br><br>&nbsp;Velocidade = " + String.valueOf(Velocidade) + "<br><br>&nbsp;\"S\" para atirar.<br><br>&nbsp;Setas para direcionar, Shift para precisão.<br><br>&nbsp;\"A\" para aumentar velocidade. \"Z\" para reduzir.<br><br>&nbsp;\"P\" para pausar.<br><br>&nbsp;Barra de espaço para resetar as<br>&nbsp;variáveis de localização.<br><br>&nbsp;ESC para sair.</html>");
             else
                 LabelStatus.setText("<html>&nbsp;Pontuação: " + String.valueOf(Pontuacao) + ".<br><br>&nbsp;Jogo pausado.<br><br>&nbsp;Aperte \"P\" para continuar.</html>");
 
