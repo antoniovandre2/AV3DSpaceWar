@@ -19,7 +19,7 @@ ____________________
 
 Comandos:
 
-Setas para direcionar.
+Setas para direcionar, Shift para precisão.
 
 "S" para atirar.
 
