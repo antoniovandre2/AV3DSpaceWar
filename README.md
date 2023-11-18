@@ -1,5 +1,5 @@
-# AV3DSpaceCatch
-![AV3DSpaceCatch logo](https://antoniovandre2.github.io/AV3DSpaceWar/AV3DSpaceWar%20-%20Logo%20-%20200p.png)
+# AV3DSpaceWar
+![AV3DSpaceWar logo](https://antoniovandre2.github.io/AV3DSpaceWar/AV3DSpaceWar%20-%20Logo%20-%20200p.png)
 ____________________
 
 Proprietário: Antonio Vandré Pedrosa Furtunato Gomes ([bit.ly/antoniovandre_legadoontologico](https://bit.ly/antoniovandre_legadoontologico)).
