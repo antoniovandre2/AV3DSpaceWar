@@ -11,7 +11,7 @@
  * 
  * Licença de uso: Atribuição-NãoComercial-CompartilhaIgual (CC BY-NC-SA).
  * 
- * Última atualização: 18-11-2023.
+ * Última atualização: 19-11-2023.
  */
 
 import java.awt.Dimension;
@@ -53,6 +53,7 @@ public class AV3DSpaceWar extends JComponent
     public int TamanhoPlanoY = 400; // Default: 400.
     public static int MinTamanhoPlanoX = 400; // Default: 400.
     public static int MinTamanhoPlanoY = 400; // Default: 400.
+    public static double MargemMaxValue = 1000; // Default: 1000;
     public static double TetaMax = Double.MAX_VALUE; // Opção: Math.PI / 3.
     public static double PhiMax = Double.MAX_VALUE; // Opção: Math.PI / 3.
     public static double MargemAnguloVisao = 0.2; // Default: 0.2.
@@ -367,16 +368,16 @@ public class AV3DSpaceWar extends JComponent
                     {TipoAlvo++; TipoAlvo %= 2;}
 
                 if (keyCode == KeyEvent.VK_UP) if (FlagPausa == 0) 
-                    {if (ke.isShiftDown()) {Phi += DeslocamentoAngular / 10;} else {Phi += DeslocamentoAngular;}}
+                    {if (Math.abs(Phi) < Double.MAX_VALUE) {if (ke.isShiftDown()) {Phi += DeslocamentoAngular / 10;} else {Phi += DeslocamentoAngular;}} else {Phi = 0;}}
 
                 if (keyCode == KeyEvent.VK_DOWN) if (FlagPausa == 0) 
-                    {if (ke.isShiftDown()) {Phi -= DeslocamentoAngular / 10;} else {Phi -= DeslocamentoAngular;}}
+                    {if (Math.abs(Phi) < Double.MAX_VALUE) {if (ke.isShiftDown()) {Phi -= DeslocamentoAngular / 10;} else {Phi -= DeslocamentoAngular;}} else {Phi = 0;}}
 
                 if (keyCode == KeyEvent.VK_LEFT) if (FlagPausa == 0) 
-                    {if (ke.isShiftDown()) {Teta += DeslocamentoAngular / 10 * Math.signum(Math.cos(Phi));} else Teta += DeslocamentoAngular * Math.signum(Math.cos(Phi));}
+                    {if (Math.abs(Teta) < Double.MAX_VALUE) {if (ke.isShiftDown()) {Teta += DeslocamentoAngular / 10 * Math.signum(Math.cos(Phi));} else Teta += DeslocamentoAngular * Math.signum(Math.cos(Phi));} else {Teta = 0;}};
 
                 if (keyCode == KeyEvent.VK_RIGHT) if (FlagPausa == 0) 
-                    {if (ke.isShiftDown()) {Teta -= DeslocamentoAngular / 10 * Math.signum(Math.cos(Phi));} else {Teta -= DeslocamentoAngular * Math.signum(Math.cos(Phi));}}
+                    {if (Math.abs(Teta) < Double.MAX_VALUE) {if (ke.isShiftDown()) {Teta -= DeslocamentoAngular / 10 * Math.signum(Math.cos(Phi));} else {Teta -= DeslocamentoAngular * Math.signum(Math.cos(Phi));}} else {Teta = 0;}}
 
                 if (keyCode == KeyEvent.VK_S) if (FlagPausa == 0)
                     {
@@ -633,6 +634,10 @@ public class AV3DSpaceWar extends JComponent
                 LabelStatus.setText("<html>&nbsp;Pontuação = " + String.valueOf(Pontuacao) + ".<br><br>&nbsp;Velocidade = " + String.valueOf(Velocidade) + "<br><br>&nbsp;\"S\" para atirar.<br><br>&nbsp;Setas para direcionar, Shift para precisão.<br><br>&nbsp;\"A\" para aumentar velocidade. \"Z\" para reduzir.<br><br>&nbsp;\"P\" para pausar.<br><br>&nbsp;Barra de espaço para resetar as<br>&nbsp;variáveis de localização.<br><br>&nbsp;ESC para sair.</html>");
             else
                 LabelStatus.setText("<html>&nbsp;Pontuação: " + String.valueOf(Pontuacao) + ".<br><br>&nbsp;Jogo pausado.<br><br>&nbsp;Aperte \"P\" para continuar.</html>");
+
+            if ((Math.abs(x) > Double.MAX_VALUE - MargemMaxValue) || (Math.abs(y) > Double.MAX_VALUE - MargemMaxValue) || (Math.abs(z) > Double.MAX_VALUE - MargemMaxValue)) {x = 50; y = 50; z = 50;}
+
+            if ((Math.abs(Xalvo) > Double.MAX_VALUE - MargemMaxValue) || (Math.abs(Yalvo) > Double.MAX_VALUE - MargemMaxValue) || (Math.abs(Zalvo) > Double.MAX_VALUE - MargemMaxValue)) {Xalvo = 0; Yalvo = 0; Zalvo = 0;}
 
             try {Thread.sleep(10);} catch(InterruptedException e) {}
             }
