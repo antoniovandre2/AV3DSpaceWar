@@ -53,7 +53,7 @@ public class AV3DSpaceWar extends JComponent
     public int TamanhoPlanoY = 400; // Default: 400.
     public static int MinTamanhoPlanoX = 400; // Default: 400.
     public static int MinTamanhoPlanoY = 400; // Default: 400.
-    public static double MargemMaxValue = 1000; // Default: 1000;
+    public static double MargemMaxValue = 2000; // Default: 2000;
     public static double TetaMax = Double.MAX_VALUE; // Opção: Math.PI / 3.
     public static double PhiMax = Double.MAX_VALUE; // Opção: Math.PI / 3.
     public static double MargemAnguloVisao = 0.2; // Default: 0.2.
