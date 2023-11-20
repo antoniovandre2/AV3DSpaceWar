@@ -11,7 +11,7 @@
  * 
  * Licença de uso: Atribuição-NãoComercial-CompartilhaIgual (CC BY-NC-SA).
  * 
- * Última atualização: 19-11-2023.
+ * Última atualização: 20-11-2023.
  */
 
 import java.awt.Dimension;
@@ -409,7 +409,7 @@ public class AV3DSpaceWar extends JComponent
                 FameAV3DSpaceWar.setSize(width, height);
                 LabelDistancia.setBounds(TamanhoPlanoX - 120 - CorrecaoX, TamanhoPlanoY - 30 - CorrecaoY, 120, 30);
                 FameAV3DSpaceWar.pack();
-                DesenharEspaco(comp);
+                DesenharEspacoDisparo(comp); DesenharEspaco(comp);
                 FlagRedimensionarOver = 1;
                 }
 
@@ -420,7 +420,7 @@ public class AV3DSpaceWar extends JComponent
                 FameAV3DSpaceWar.setSize(width, height);
                 LabelDistancia.setBounds(TamanhoPlanoX - 120 - CorrecaoX, TamanhoPlanoY - 30 - CorrecaoY, 120, 30);
                 FameAV3DSpaceWar.pack();
-                DesenharEspaco(comp);
+                DesenharEspacoDisparo(comp); DesenharEspaco(comp);
                 FlagRedimensionarOver = 1;
                 }
 
@@ -434,7 +434,7 @@ public class AV3DSpaceWar extends JComponent
                     comp.setPreferredSize(new Dimension(TamanhoPlanoX, TamanhoPlanoY));
                     LabelDistancia.setBounds(TamanhoPlanoX - 120 - CorrecaoX, TamanhoPlanoY - 30 - CorrecaoY, 120, 30);
                     FameAV3DSpaceWar.pack();
-                    DesenharEspaco(comp);
+                    DesenharEspacoDisparo(comp); DesenharEspaco(comp);
 
                     FlagPausa = 1;
                     }
