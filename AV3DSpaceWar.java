@@ -56,10 +56,7 @@ public class AV3DSpaceWar extends JComponent
     public static double MargemMaxValue = 1000; // Default: 1000;
     public static double TetaMax = Double.MAX_VALUE; // Opção: Math.PI / 3.
     public static double PhiMax = Double.MAX_VALUE; // Opção: Math.PI / 3.
-    public static double MargemAnguloVisao = 0.1; // Default: 0.1.
-    public static double MargemProdutoEscalar = 1.1; // Default: 1.1.
-    public static double MargemPhiProdutoEscalarNegativo = Math.PI / 2; // Default: Math.PI / 2.
-    public static double MargemDistanciaProdutoEscalarNegativo = 3; // Default: 3.
+    public static double MargemAnguloVisao = 0.2; // Default: 0.2.
     public double Velocidade = 50; // Default inicial: 50.
     public static double LimiteSuperiorVelocidade = 100; // Default: 100.
     public static double LimiteInferiorVelocidade = 10; // Default: 10.
@@ -89,7 +86,7 @@ public class AV3DSpaceWar extends JComponent
     public static int ShiftDisparoZ = 2; // Default: 2.
     public static double ComprimentoDisparo = 20; // Default: 20.
     public static double DistanciaCapturaAlvo = 3; // Default: 3.
-    public static double AnguloDirecaoIr = 9 * Math.PI / 10; // Default: 9 * Math.PI / 10
+    public static double AnguloDirecaoIr = 9 * Math.PI / 10; // Default: 9 * Math.PI / 10.
     public static Color BackgroundCor = Color.BLACK; // Default: Color.BLACK.
     public static Color CorAlvo = Color.WHITE; // Default: Color.WHITE.
     public static Color CorGuias = Color.GREEN; // Default: Color.GREEN.
@@ -694,9 +691,9 @@ public class AV3DSpaceWar extends JComponent
                 int xf;
                 int yf;
 
-                double ProdutoEscalaro = xo * Math.cos(Teta) * Math.cos(Phi) - yo * Math.sin(Teta) * Math.cos(Phi);
+                double ProdutoEscalaro = xo * Math.cos(Teta) * Math.cos(Phi) - yo * Math.sin(Teta) * Math.cos(Phi) - zo * Math.sin(Phi);
 
-                double ProdutoEscalard = xd * Math.cos(Teta) * Math.cos(Phi) - yd * Math.sin(Teta) * Math.cos(Phi);
+                double ProdutoEscalard = xd * Math.cos(Teta) * Math.cos(Phi) - yd * Math.sin(Teta) * Math.cos(Phi) - zd * Math.sin(Phi);
 
                 double ProdutoEscalarXo = xo * Math.cos(Teta) * Math.cos(Phi) - yo * Math.sin(Teta) * Math.cos(Phi);
 
@@ -714,7 +711,7 @@ public class AV3DSpaceWar extends JComponent
 
                 yf = (int) (TamanhoPlanoY / 2 + TamanhoPlanoY / 2 * DistanciaTela * (xd * Math.cos(Teta) * Math.sin(Phi) - yd * Math.sin(Teta) * Math.sin(Phi) + zd * Math.cos(Phi)) / Math.sqrt(xd * xd + yd * yd + zd * zd)) - CorrecaoY;
 
-                if (((Phi % Math.PI < 4 * Math.PI / 9) || (Phi % Math.PI > 5 * Math.PI / 9)) && ((((Phi % (2 * Math.PI) < Math.PI) && (zo - z < 0)) || ((Phi % (2 * Math.PI) > Math.PI) && (zo - z > 0))) && (Math.abs(Math.acos(ProdutoEscalaro / Math.sqrt(xo * xo + yo * yo + zo * zo))) < AnguloVisao + MargemAnguloVisao) && ((((Phi % (2 * Math.PI) < Math.PI) && (zd - z < 0)) || ((Phi % (2 * Math.PI) > Math.PI) && (zd - z > 0))) && ((Math.abs(Math.acos(ProdutoEscalard / Math.sqrt(xd * xd + yd * yd + zd * zd))) < AnguloVisao + MargemAnguloVisao) && (Math.min(xi, Math.min(yi, Math.min(xf, yf))) > 0) && (Math.max(xi + CorrecaoX, xf + CorrecaoX) < TamanhoPlanoX) && (Math.max(yi + CorrecaoY, yf + CorrecaoY) < TamanhoPlanoY)))))
+                if ((((Phi % Math.PI < 4 * Math.PI / 9) || (Phi % Math.PI > 5 * Math.PI / 9)) || ((((Phi % (2 * Math.PI) < Math.PI) && (zo - z < 0)) || ((Phi % (2 * Math.PI) > Math.PI) && (zo - z > 0))) && (((Phi % (2 * Math.PI) < Math.PI) && (zd - z < 0)) || ((Phi % (2 * Math.PI) > Math.PI) && (zd - z > 0))))) && (Math.abs(Math.acos(ProdutoEscalaro / Math.sqrt(xo * xo + yo * yo + zo * zo))) < AnguloVisao + MargemAnguloVisao) && (Math.abs(Math.acos(ProdutoEscalard / Math.sqrt(xd * xd + yd * yd + zd * zd))) < AnguloVisao + MargemAnguloVisao) && (Math.min(xi, Math.min(yi, Math.min(xf, yf))) > 0) && (Math.max(xi + CorrecaoX, xf + CorrecaoX) < TamanhoPlanoX) && (Math.max(yi + CorrecaoY, yf + CorrecaoY) < TamanhoPlanoY))
                     comp.addLine(xi, yi, xf, yf, CorAlvo);
 
                 if ((Math.acos(ProdutoEscalarXo / Math.sqrt(xo * xo + yo * yo)) <= AnguloDirecaoIr) && (Math.acos(ProdutoEscalarXd / Math.sqrt(xd * xd + yd * yd)) <= AnguloDirecaoIr))
@@ -824,9 +821,9 @@ public class AV3DSpaceWar extends JComponent
                 int xf;
                 int yf;
 
-                double ProdutoEscalaro = xo * Math.cos(Teta) * Math.cos(Phi) - yo * Math.sin(Teta) * Math.cos(Phi);
+                double ProdutoEscalaro = xo * Math.cos(Teta) * Math.cos(Phi) - yo * Math.sin(Teta) * Math.cos(Phi) - zo * Math.sin(Phi);
 
-                double ProdutoEscalard = xd * Math.cos(Teta) * Math.cos(Phi) - yd * Math.sin(Teta) * Math.cos(Phi);
+                double ProdutoEscalard = xd * Math.cos(Teta) * Math.cos(Phi) - yd * Math.sin(Teta) * Math.cos(Phi) - zd * Math.sin(Phi);
 
                 xi = (int) (TamanhoPlanoX / 2 + TamanhoPlanoX / 2 * DistanciaTela * (xo * Math.sin(Teta) + yo * Math.cos(Teta)) / Math.sqrt(xo * xo + yo * yo + zo * zo)) - CorrecaoX;
 
@@ -836,7 +833,7 @@ public class AV3DSpaceWar extends JComponent
 
                 yf = (int) (TamanhoPlanoY / 2 + TamanhoPlanoY / 2 * DistanciaTela * (xd * Math.cos(Teta) * Math.sin(Phi) - yd * Math.sin(Teta) * Math.sin(Phi) + zd * Math.cos(Phi)) / Math.sqrt(xd * xd + yd * yd + zd * zd)) - CorrecaoY;
 
-                if (((Phi % Math.PI < 4 * Math.PI / 9) || (Phi % Math.PI > 5 * Math.PI / 9)) && ((((Phi % (2 * Math.PI) < Math.PI) && (zo - z < 0)) || ((Phi % (2 * Math.PI) > Math.PI) && (zo - z > 0))) && (Math.abs(Math.acos(ProdutoEscalaro / Math.sqrt(xo * xo + yo * yo + zo * zo))) < AnguloVisao + MargemAnguloVisao) && ((((Phi % (2 * Math.PI) < Math.PI) && (zd - z < 0)) || ((Phi % (2 * Math.PI) > Math.PI) && (zd - z > 0))) && ((Math.abs(Math.acos(ProdutoEscalard / Math.sqrt(xd * xd + yd * yd + zd * zd))) < AnguloVisao + MargemAnguloVisao) && (Math.min(xi, Math.min(yi, Math.min(xf, yf))) > 0) && (Math.max(xi + CorrecaoX, xf + CorrecaoX) < TamanhoPlanoX) && (Math.max(yi + CorrecaoY, yf + CorrecaoY) < TamanhoPlanoY)))))
+                if ((((Phi % Math.PI < 4 * Math.PI / 9) || (Phi % Math.PI > 5 * Math.PI / 9)) || ((((Phi % (2 * Math.PI) < Math.PI) && (zo - z < 0)) || ((Phi % (2 * Math.PI) > Math.PI) && (zo - z > 0))) && (((Phi % (2 * Math.PI) < Math.PI) && (zd - z < 0)) || ((Phi % (2 * Math.PI) > Math.PI) && (zd - z > 0))))) && (Math.abs(Math.acos(ProdutoEscalaro / Math.sqrt(xo * xo + yo * yo + zo * zo))) < AnguloVisao + MargemAnguloVisao) && (Math.abs(Math.acos(ProdutoEscalard / Math.sqrt(xd * xd + yd * yd + zd * zd))) < AnguloVisao + MargemAnguloVisao) && (Math.min(xi, Math.min(yi, Math.min(xf, yf))) > 0) && (Math.max(xi + CorrecaoX, xf + CorrecaoX) < TamanhoPlanoX) && (Math.max(yi + CorrecaoY, yf + CorrecaoY) < TamanhoPlanoY))
                     comp.addLine(xi, yi, xf, yf, CorAlvo);
                 }
             }
