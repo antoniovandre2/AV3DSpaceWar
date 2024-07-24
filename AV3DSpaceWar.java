@@ -364,7 +364,7 @@ public class AV3DSpaceWar extends JComponent
 				if (keyCode == KeyEvent.VK_Q) 
 					{TipoAlvo++; TipoAlvo %= 2;}
 
-				Rot = 9 * Math.PI / 20 * Math.abs(Math.sin(Phi));
+				Rot = Math.PI / 3 * Math.sin(Phi);
 
 				double Tetatms = Teta - DeslocamentoAngular * Math.sin(Rot);
 				double Tetatps = Teta + DeslocamentoAngular * Math.sin(Rot);
@@ -377,16 +377,21 @@ public class AV3DSpaceWar extends JComponent
 				double Phitps = Phi + DeslocamentoAngular * Math.sin(Rot);
 
 				if (keyCode == KeyEvent.VK_UP) {if (FlagPausa == 0) 
-					{if (Math.abs(Tetatps) < Double.MAX_VALUE) {if (Math.abs(Phitpc) < Double.MAX_VALUE) {if (ke.isShiftDown()) {Teta = Tetatps / 10; Phi = Phitpc / 10;} else {Teta = Tetatps; Phi = Phitpc;}} else {Phi = 0;}} else {Teta = 0;}} flagDesenharDisparo = 1;}
+					{if (Math.abs(Tetatps) < Double.MAX_VALUE) {if (Math.abs(Phitpc) < Double.MAX_VALUE) {if (ke.isShiftDown()) {Teta += (Tetatps - Teta) / 10; Phi += (Phitpc - Phi) / 10;} else {Teta = Tetatps; Phi = Phitpc;}} else {Phi = 0;}} else {Teta = 0;}} flagDesenharDisparo = 1;}
 
 				if (keyCode == KeyEvent.VK_DOWN) {if (FlagPausa == 0) 
-					{if (Math.abs(Tetatms) < Double.MAX_VALUE) {if (Math.abs(Phitmc) < Double.MAX_VALUE) {if (ke.isShiftDown()) {Teta = Tetatms / 10; Phi = Phitmc / 10;} else {Teta = Tetatms; Phi = Phitmc;}} else {Phi = 0;}} else {Teta = 0;}} flagDesenharDisparo = 1;}
+					{if (Math.abs(Tetatms) < Double.MAX_VALUE) {if (Math.abs(Phitmc) < Double.MAX_VALUE) {if (ke.isShiftDown()) {Teta += (Tetatms - Teta) / 10; Phi += (Phitmc - Phi) / 10;} else {Teta = Tetatms; Phi = Phitmc;}} else {Phi = 0;}} else {Teta = 0;}} flagDesenharDisparo = 1;}
 
 				if (keyCode == KeyEvent.VK_LEFT) {if (FlagPausa == 0) 
-					{if (Math.abs(Tetatpc) < Double.MAX_VALUE) {if (Math.abs(Phitms) < Double.MAX_VALUE) {if (ke.isShiftDown()) {Teta = Tetatpc / 10; Phi = Phitms / 10;} else {Teta = Tetatpc; Phi = Phitms;}} else {Phi = 0;}} else {Teta = 0;}} flagDesenharDisparo = 1;}
+					{if (Math.abs(Tetatpc) < Double.MAX_VALUE) {if 
+					(Math.abs(Phitms) < Double.MAX_VALUE) {if 
+					(ke.isShiftDown()) {Teta += (Tetatpc - Teta) / 10; 
+					Phi += (Phitms - Phi) / 10;} else {Teta = Tetatpc; Phi = 
+					Phitms;}} else {Phi = 0;}} else {Teta = 0;}} 
+					flagDesenharDisparo = 1;}
 
 				if (keyCode == KeyEvent.VK_RIGHT) {if (FlagPausa == 0) 
-					{if (Math.abs(Tetatmc) < Double.MAX_VALUE) {if (Math.abs(Phitps) < Double.MAX_VALUE) {if (ke.isShiftDown()) {Teta = Tetatmc / 10; Phi = Phitps / 10;} else {Teta = Tetatmc; Phi = Phitps;}} else {Phi = 0;}} else {Teta = 0;}} flagDesenharDisparo = 1;}
+					{if (Math.abs(Tetatmc) < Double.MAX_VALUE) {if (Math.abs(Phitps) < Double.MAX_VALUE) {if (ke.isShiftDown()) {Teta += (Tetatmc - Teta) / 10; Phi += (Phitps - Phi) / 10;} else {Teta = Tetatmc; Phi = Phitps;}} else {Phi = 0;}} else {Teta = 0;}} flagDesenharDisparo = 1;}
 
 				if (keyCode == KeyEvent.VK_S) {if (FlagPausa == 0)
 					{
