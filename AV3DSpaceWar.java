@@ -364,7 +364,7 @@ public class AV3DSpaceWar extends JComponent
 				if (keyCode == KeyEvent.VK_Q) 
 					{TipoAlvo++; TipoAlvo %= 2;}
 
-				Rot = Math.PI / 3 * Math.sin(Phi);
+				Rot = Math.PI / 4 * Math.abs(Math.sin(Phi));
 
 				double Tetatms = Teta - DeslocamentoAngular * Math.sin(Rot);
 				double Tetatps = Teta + DeslocamentoAngular * Math.sin(Rot);
@@ -744,7 +744,7 @@ public class AV3DSpaceWar extends JComponent
 
 					yf = (int) (TamanhoPlanoY / 2 + TamanhoPlanoY / 2 * DistanciaTela * (Math.sin(Rot) * xft + Math.cos(Rot) * yft) / df) - CorrecaoY;
 
-					if ((Math.abs(Math.acos(ProdutoEscalaro / di)) < AnguloVisao + MargemAnguloVisao) && (Math.abs(Math.acos(ProdutoEscalard / df)) < AnguloVisao + MargemAnguloVisao) && (Math.min(xi, Math.min(yi, Math.min(xf, yf))) > 0) && (Math.max(xi + CorrecaoX, xf + CorrecaoX) < TamanhoPlanoX) && (Math.max(yi + CorrecaoY, yf + CorrecaoY) < TamanhoPlanoY))
+					if ((Math.acos(ProdutoEscalaro / di) < AnguloVisao + MargemAnguloVisao) && (Math.acos(ProdutoEscalard / df) < AnguloVisao + MargemAnguloVisao) && (Math.min(xi, Math.min(yi, Math.min(xf, yf))) > 0) && (Math.max(xi + CorrecaoX, xf + CorrecaoX) < TamanhoPlanoX) && (Math.max(yi + CorrecaoY, yf + CorrecaoY) < TamanhoPlanoY))
 						comp.addLine(xi, yi, xf, yf, CorAlvo, i == EspacoLinhas.length - 1 ? Integer.MAX_VALUE : i);
 
 					if ((Math.acos(ProdutoEscalarXo / Math.sqrt(xo * xo + yo * yo)) <= AnguloDirecaoIr) && (Math.acos(ProdutoEscalarXd / Math.sqrt(xd * xd + yd * yd)) <= AnguloDirecaoIr))
@@ -893,7 +893,7 @@ public class AV3DSpaceWar extends JComponent
 						yf = (int) (TamanhoPlanoY / 2 + TamanhoPlanoY / 2 * DistanciaTela * (Math.sin(Rot) * xft + Math.cos(Rot) * yft) / df) - CorrecaoY;
 						}
 
-					if ((Math.abs(Math.acos(ProdutoEscalaro / di)) < AnguloVisao + MargemAnguloVisao) && (Math.abs(Math.acos(ProdutoEscalard / df)) < AnguloVisao + MargemAnguloVisao) && (Math.min(xi, Math.min(yi, Math.min(xf, yf))) > 0) && (Math.max(xi + CorrecaoX, xf + CorrecaoX) < TamanhoPlanoX) && (Math.max(yi + CorrecaoY, yf + CorrecaoY) < TamanhoPlanoY))
+					if ((Math.acos(ProdutoEscalaro / di) < AnguloVisao + MargemAnguloVisao) && (Math.acos(ProdutoEscalard / df) < AnguloVisao + MargemAnguloVisao) && (Math.min(xi, Math.min(yi, Math.min(xf, yf))) > 0) && (Math.max(xi + CorrecaoX, xf + CorrecaoX) < TamanhoPlanoX) && (Math.max(yi + CorrecaoY, yf + CorrecaoY) < TamanhoPlanoY))
 						comp.addLine(xi, yi, xf, yf, CorAlvo, i == EspacoLinhas.length - 1 ? Integer.MAX_VALUE : i);
 					}
 				}
