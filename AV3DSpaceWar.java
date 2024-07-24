@@ -364,7 +364,7 @@ public class AV3DSpaceWar extends JComponent
 				if (keyCode == KeyEvent.VK_Q) 
 					{TipoAlvo++; TipoAlvo %= 2;}
 
-				Rot = Math.PI / 4 * Math.abs(Math.sin(Phi));
+				Rot = Math.PI / 6 * Math.abs(Math.sin(Phi));
 
 				double Tetatms = Teta - DeslocamentoAngular * Math.sin(Rot);
 				double Tetatps = Teta + DeslocamentoAngular * Math.sin(Rot);
