@@ -11,7 +11,7 @@
  * 
  * Licença de uso: Atribuição-NãoComercial-CompartilhaIgual (CC BY-NC-SA).
  * 
- * Última atualização: 24-07-2024.
+ * Última atualização: 11-11-2024.
  */
 
 import java.awt.Dimension;
@@ -379,9 +379,9 @@ public class AV3DSpaceWar extends JComponent
 				if (keyCode == KeyEvent.VK_S) {Teta0 = Teta; Phi0 = Phi; if (FlagPausa == 0)
 					{
 					if (Disparo.equals(""))
-						Disparo = String.valueOf(x) + "," + String.valueOf(y) + "," + String.valueOf(z + ShiftDisparoZ) + ";" + String.valueOf(x + ComprimentoDisparo * Math.cos(-Phi) * Math.cos(-Teta)) + "," + String.valueOf(y + ComprimentoDisparo * Math.cos(-Phi) * Math.sin(-Teta)) + "," + String.valueOf(z + ShiftDisparoZ + ComprimentoDisparo * Math.sin(-Phi));
+						Disparo = String.valueOf(x + ShiftDisparoZ * Math.sin(Phi) * Math.cos(-Teta)) + "," + String.valueOf(y + ShiftDisparoZ * Math.sin(Phi) * Math.sin(-Teta)) + "," + String.valueOf(z + ShiftDisparoZ * Math.cos(Phi)) + ";" + String.valueOf(x + ShiftDisparoZ * Math.sin(Phi) * Math.cos(-Teta) + ComprimentoDisparo * Math.cos(-Phi) * Math.cos(-Teta)) + "," + String.valueOf(y + ShiftDisparoZ * Math.sin(Phi) * Math.sin(-Teta) + ComprimentoDisparo * Math.cos(-Phi) * Math.sin(-Teta)) + "," + String.valueOf(z + ShiftDisparoZ * Math.cos(Phi) + ComprimentoDisparo * Math.sin(-Phi));
 					else
-						Disparo = Disparo + "|" + String.valueOf(x) + "," + String.valueOf(y) + "," + String.valueOf(z + ShiftDisparoZ) + ";" + String.valueOf(x + ComprimentoDisparo * Math.cos(-Phi) * Math.cos(-Teta)) + "," + String.valueOf(y + ComprimentoDisparo * Math.cos(-Phi) * Math.sin(-Teta)) + "," + String.valueOf(z + ShiftDisparoZ + ComprimentoDisparo * Math.sin(-Phi));
+						Disparo = Disparo + "|" + String.valueOf(x + ShiftDisparoZ * Math.sin(Phi) * Math.cos(-Teta)) + "," + String.valueOf(y + ShiftDisparoZ * Math.sin(Phi) * Math.sin(-Teta)) + "," + String.valueOf(z + ShiftDisparoZ * Math.cos(Phi)) + ";" + String.valueOf(x + ShiftDisparoZ * Math.sin(Phi) * Math.cos(-Teta) + ComprimentoDisparo * Math.cos(-Phi) * Math.cos(-Teta)) + "," + String.valueOf(y + ShiftDisparoZ * Math.sin(Phi) * Math.sin(-Teta) + ComprimentoDisparo * Math.cos(-Phi) * Math.sin(-Teta)) + "," + String.valueOf(z + ShiftDisparoZ * Math.cos(Phi) + ComprimentoDisparo * Math.sin(-Phi));
 					}}
 				}
 
