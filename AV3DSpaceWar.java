@@ -11,7 +11,7 @@
  * 
  * Licença de uso: Atribuição-NãoComercial-CompartilhaIgual (CC BY-NC-SA).
  * 
- * Última atualização: 11-11-2024.
+ * Última atualização: 27-03-2025.
  */
 
 import java.awt.Dimension;
@@ -365,16 +365,16 @@ public class AV3DSpaceWar extends JComponent
 					{Teta0 = Teta; Phi0 = Phi; TipoAlvo++; TipoAlvo %= 2;}
 
 				if (keyCode == KeyEvent.VK_UP) if (FlagPausa == 0) 
-					{Teta0 = Teta; Phi0 = Phi; if (Math.abs(Phi) < Double.MAX_VALUE - MargemMaxValue) {Phi += DeslocamentoAngular;} else {Phi = 0;}}
+					{Teta0 = Teta; Phi0 = Phi; if (ke.isShiftDown()) {if (Math.abs(Phi) < Double.MAX_VALUE - MargemMaxValue - DeslocamentoAngular / 10) {Phi += DeslocamentoAngular / 10;} else {Phi = 0;}} else {if (Math.abs(Phi) < Double.MAX_VALUE - MargemMaxValue - DeslocamentoAngular) {Phi += DeslocamentoAngular;} else {Phi = 0;}}}
 
 				if (keyCode == KeyEvent.VK_DOWN) if (FlagPausa == 0) 
-					{Teta0 = Teta; Phi0 = Phi; if (Math.abs(Phi) < Double.MAX_VALUE - MargemMaxValue) {Phi -= DeslocamentoAngular;} else {Phi = 0;}}
+					{Teta0 = Teta; Phi0 = Phi; if (ke.isShiftDown()) {if (Math.abs(Phi) < Double.MAX_VALUE - MargemMaxValue - DeslocamentoAngular / 10) {Phi -= DeslocamentoAngular / 10;} else {Phi = 0;}} else {if (Math.abs(Phi) < Double.MAX_VALUE - MargemMaxValue - DeslocamentoAngular) {Phi -= DeslocamentoAngular;} else {Phi = 0;}}}
 
 				if (keyCode == KeyEvent.VK_LEFT) if (FlagPausa == 0) 
-					{if (Math.abs(Teta) < Double.MAX_VALUE - MargemMaxValue) {Teta += DeslocamentoAngular * Math.cos(Phi0); x -= 2 * DeslocamentoLinear * Math.abs(Math.sin(Phi0)) * Math.sin(Teta0); y -= 2 * DeslocamentoLinear * Math.abs(Math.sin(Phi0)) * Math.cos(Teta0);} else {Teta = 0;}}
+					{if (ke.isShiftDown()) {if (Math.abs(Teta) < Double.MAX_VALUE - MargemMaxValue - DeslocamentoAngular / 10 * Math.cos(Phi0)) {Teta += DeslocamentoAngular / 10 * Math.cos(Phi0); x -= 2 * DeslocamentoLinear / 10 * Math.abs(Math.sin(Phi0)) * Math.sin(Teta0); y -= 2 * DeslocamentoLinear / 10 * Math.abs(Math.sin(Phi0)) * Math.cos(Teta0);} else {Teta = 0;}} else {if (Math.abs(Teta) < Double.MAX_VALUE - MargemMaxValue - DeslocamentoAngular * Math.cos(Phi0)) {Teta += DeslocamentoAngular * Math.cos(Phi0); x -= 2 * DeslocamentoLinear * Math.abs(Math.sin(Phi0)) * Math.sin(Teta0); y -= 2 * DeslocamentoLinear * Math.abs(Math.sin(Phi0)) * Math.cos(Teta0);} else {Teta = 0;}}}
 
 				if (keyCode == KeyEvent.VK_RIGHT) if (FlagPausa == 0) 
-					{if (Math.abs(Teta) < Double.MAX_VALUE - MargemMaxValue) {Teta -= DeslocamentoAngular * Math.cos(Phi0); x += 2 * DeslocamentoLinear * Math.abs(Math.sin(Phi0)) * Math.sin(Teta0); y += 2 * DeslocamentoLinear * Math.abs(Math.sin(Phi0)) * Math.cos(Teta0);} else {Teta = 0;}}
+					{if (ke.isShiftDown()) {if (Math.abs(Teta) < Double.MAX_VALUE - MargemMaxValue - DeslocamentoAngular / 10 * Math.cos(Phi0)) {Teta -= DeslocamentoAngular / 10 * Math.cos(Phi0); x += 2 * DeslocamentoLinear / 10 * Math.abs(Math.sin(Phi0)) * Math.sin(Teta0); y += 2 * DeslocamentoLinear / 10 * Math.abs(Math.sin(Phi0)) * Math.cos(Teta0);} else {Teta = 0;}} else {if (Math.abs(Teta) < Double.MAX_VALUE - MargemMaxValue - DeslocamentoAngular * Math.cos(Phi0)) {Teta -= DeslocamentoAngular * Math.cos(Phi0); x += 2 * DeslocamentoLinear * Math.abs(Math.sin(Phi0)) * Math.sin(Teta0); y += 2 * DeslocamentoLinear * Math.abs(Math.sin(Phi0)) * Math.cos(Teta0);} else {Teta = 0;}}}
 
 				if (keyCode == KeyEvent.VK_S) {Teta0 = Teta; Phi0 = Phi; if (FlagPausa == 0)
 					{
