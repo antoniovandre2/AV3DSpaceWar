@@ -11,7 +11,7 @@
  * 
  * Licença de uso: Atribuição-NãoComercial-CompartilhaIgual (CC BY-NC-SA).
  * 
- * Última atualização: 27-03-2025.
+ * Última atualização: 10-04-2025.
  */
 
 import java.awt.Dimension;
@@ -288,6 +288,7 @@ public class AV3DSpaceWar extends JComponent
 
 		FameAV3DSpaceWar.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 
+		FameAV3DSpaceWar.setMinimumSize(new Dimension(MinTamanhoPlanoX, MinTamanhoPlanoY + TamanhoEspacoLabelStatus));
 		FameAV3DSpaceWar.setPreferredSize(new Dimension(TamanhoPlanoX, TamanhoPlanoY + TamanhoEspacoLabelStatus));
 		AV3DSpaceWar comp = new AV3DSpaceWar();
 		comp.setPreferredSize(new Dimension(TamanhoPlanoX, TamanhoPlanoY));
@@ -398,28 +399,6 @@ public class AV3DSpaceWar extends JComponent
 
 			int width = FameAV3DSpaceWar.getWidth();
 			int height = FameAV3DSpaceWar.getHeight();
-
-			if (width < MinTamanhoPlanoX)
-				{
-				width = MinTamanhoPlanoX;
-				FameAV3DSpaceWar.setPreferredSize(new Dimension(width, height));
-				FameAV3DSpaceWar.setSize(width, height);
-				LabelDistancia.setBounds(TamanhoPlanoX - 120 - CorrecaoX, TamanhoPlanoY - 30 - CorrecaoY, 120, 30);
-				FameAV3DSpaceWar.pack();
-				DesenharEspacoDisparo(comp); DesenharEspaco(comp);
-				FlagRedimensionarOver = 1;
-				}
-
-			if (height < MinTamanhoPlanoY + TamanhoEspacoLabelStatus)
-				{
-				height = MinTamanhoPlanoY + TamanhoEspacoLabelStatus;
-				FameAV3DSpaceWar.setPreferredSize(new Dimension(width, height));
-				FameAV3DSpaceWar.setSize(width, height);
-				LabelDistancia.setBounds(TamanhoPlanoX - 120 - CorrecaoX, TamanhoPlanoY - 30 - CorrecaoY, 120, 30);
-				FameAV3DSpaceWar.pack();
-				DesenharEspacoDisparo(comp); DesenharEspaco(comp);
-				FlagRedimensionarOver = 1;
-				}
 
 			if (FlagRedimensionarOver == 0)
 				if ((width != TamanhoPlanoX) || (height != TamanhoPlanoY + TamanhoEspacoLabelStatus))
