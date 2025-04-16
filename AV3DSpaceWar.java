@@ -11,8 +11,10 @@
  * 
  * Licença de uso: Atribuição-NãoComercial-CompartilhaIgual (CC BY-NC-SA).
  * 
- * Última atualização: 10-04-2025.
+ * Última atualização: 16-04-2025.
  */
+
+import java.lang.IllegalThreadStateException;
 
 import java.awt.Dimension;
 import java.awt.Graphics;
@@ -69,6 +71,7 @@ public class AV3DSpaceWar extends JComponent
 	public static double DistanciaTela = 2; // Default: 2.
 	public static double DeslocamentoLinear = 1; // Default: 1.
 	public static double DeslocamentoAngular = 0.05; // Default: 0.05.
+	public static double FatorDeslocamentoTrick = 4; // Default: 4.
 	public static int TamanhoAlvo = 3; // Default: 3.
 	public static int DivisoesAlvo = 1; // Default: 1.
 	public int TipoAlvo = 0; // Default: 0.
@@ -372,10 +375,10 @@ public class AV3DSpaceWar extends JComponent
 					{Teta0 = Teta; Phi0 = Phi; if (ke.isShiftDown()) {if (Math.abs(Phi) < Double.MAX_VALUE - MargemMaxValue - DeslocamentoAngular / 10) {Phi -= DeslocamentoAngular / 10;} else {Phi = 0;}} else {if (Math.abs(Phi) < Double.MAX_VALUE - MargemMaxValue - DeslocamentoAngular) {Phi -= DeslocamentoAngular;} else {Phi = 0;}}}
 
 				if (keyCode == KeyEvent.VK_LEFT) if (FlagPausa == 0) 
-					{if (ke.isShiftDown()) {if (Math.abs(Teta) < Double.MAX_VALUE - MargemMaxValue - DeslocamentoAngular / 10 * Math.cos(Phi0)) {Teta += DeslocamentoAngular / 10 * Math.cos(Phi0); x -= 2 * DeslocamentoLinear / 10 * Math.abs(Math.sin(Phi0)) * Math.sin(Teta0); y -= 2 * DeslocamentoLinear / 10 * Math.abs(Math.sin(Phi0)) * Math.cos(Teta0);} else {Teta = 0;}} else {if (Math.abs(Teta) < Double.MAX_VALUE - MargemMaxValue - DeslocamentoAngular * Math.cos(Phi0)) {Teta += DeslocamentoAngular * Math.cos(Phi0); x -= 2 * DeslocamentoLinear * Math.abs(Math.sin(Phi0)) * Math.sin(Teta0); y -= 2 * DeslocamentoLinear * Math.abs(Math.sin(Phi0)) * Math.cos(Teta0);} else {Teta = 0;}}}
+					{if (ke.isShiftDown()) {if (Math.abs(Teta) < Double.MAX_VALUE - MargemMaxValue - DeslocamentoAngular / 10 * Math.cos(Phi0)) {Teta += DeslocamentoAngular / 10 * Math.cos(Phi0); x -= FatorDeslocamentoTrick * DeslocamentoLinear / 10 * Math.abs(Math.sin(Phi0)) * Math.sin(Teta0); y -= FatorDeslocamentoTrick * DeslocamentoLinear / 10 * Math.abs(Math.sin(Phi0)) * Math.cos(Teta0);} else {Teta = 0;}} else {if (Math.abs(Teta) < Double.MAX_VALUE - MargemMaxValue - DeslocamentoAngular * Math.cos(Phi0)) {Teta += DeslocamentoAngular * Math.cos(Phi0); x -= FatorDeslocamentoTrick * DeslocamentoLinear * Math.abs(Math.sin(Phi0)) * Math.sin(Teta0); y -= FatorDeslocamentoTrick * DeslocamentoLinear * Math.abs(Math.sin(Phi0)) * Math.cos(Teta0);} else {Teta = 0;}}}
 
 				if (keyCode == KeyEvent.VK_RIGHT) if (FlagPausa == 0) 
-					{if (ke.isShiftDown()) {if (Math.abs(Teta) < Double.MAX_VALUE - MargemMaxValue - DeslocamentoAngular / 10 * Math.cos(Phi0)) {Teta -= DeslocamentoAngular / 10 * Math.cos(Phi0); x += 2 * DeslocamentoLinear / 10 * Math.abs(Math.sin(Phi0)) * Math.sin(Teta0); y += 2 * DeslocamentoLinear / 10 * Math.abs(Math.sin(Phi0)) * Math.cos(Teta0);} else {Teta = 0;}} else {if (Math.abs(Teta) < Double.MAX_VALUE - MargemMaxValue - DeslocamentoAngular * Math.cos(Phi0)) {Teta -= DeslocamentoAngular * Math.cos(Phi0); x += 2 * DeslocamentoLinear * Math.abs(Math.sin(Phi0)) * Math.sin(Teta0); y += 2 * DeslocamentoLinear * Math.abs(Math.sin(Phi0)) * Math.cos(Teta0);} else {Teta = 0;}}}
+					{if (ke.isShiftDown()) {if (Math.abs(Teta) < Double.MAX_VALUE - MargemMaxValue - DeslocamentoAngular / 10 * Math.cos(Phi0)) {Teta -= DeslocamentoAngular / 10 * Math.cos(Phi0); x += FatorDeslocamentoTrick * DeslocamentoLinear / 10 * Math.abs(Math.sin(Phi0)) * Math.sin(Teta0); y += FatorDeslocamentoTrick * DeslocamentoLinear / 10 * Math.abs(Math.sin(Phi0)) * Math.cos(Teta0);} else {Teta = 0;}} else {if (Math.abs(Teta) < Double.MAX_VALUE - MargemMaxValue - DeslocamentoAngular * Math.cos(Phi0)) {Teta -= DeslocamentoAngular * Math.cos(Phi0); x += FatorDeslocamentoTrick * DeslocamentoLinear * Math.abs(Math.sin(Phi0)) * Math.sin(Teta0); y += FatorDeslocamentoTrick * DeslocamentoLinear * Math.abs(Math.sin(Phi0)) * Math.cos(Teta0);} else {Teta = 0;}}}
 
 				if (keyCode == KeyEvent.VK_S) {Teta0 = Teta; Phi0 = Phi; if (FlagPausa == 0)
 					{
@@ -577,16 +580,21 @@ public class AV3DSpaceWar extends JComponent
 
 					if (Math.sqrt(((2 * Xalvo + TamanhoAlvo) / 2 - Double.parseDouble(DisparoUnidade0[0])) * ((2 * Xalvo + TamanhoAlvo) / 2 - Double.parseDouble(DisparoUnidade0[0])) + ((2 * Yalvo + TamanhoAlvo) / 2 - Double.parseDouble(DisparoUnidade0[1])) * ((2 * Yalvo + TamanhoAlvo) / 2 - Double.parseDouble(DisparoUnidade0[1])) + ((2 * Zalvo + TamanhoAlvo) / 2 - Double.parseDouble(DisparoUnidade0[2])) * ((2 * Zalvo + TamanhoAlvo) / 2 - Double.parseDouble(DisparoUnidade0[2]))) <= DistanciaCapturaAlvo)
 						{
-						try {
-							InputStream CatchIS = getClass().getResourceAsStream(ArquivoSomCatch);
-							InputStream CatchBIS = new BufferedInputStream(CatchIS);
-							AudioInputStream CatchAIS = AudioSystem.getAudioInputStream(CatchBIS);
-							Catch = AudioSystem.getClip();  
-							Catch.open(CatchAIS);
-							Catch.start();
+						try
+							{
+							(new Thread () {public void run ()
+								{
+								try {
+									InputStream CatchIS = getClass().getResourceAsStream(ArquivoSomCatch);
+									InputStream CatchBIS = new BufferedInputStream(CatchIS);
+									AudioInputStream CatchAIS = AudioSystem.getAudioInputStream(CatchBIS);
+									Catch = AudioSystem.getClip();  
+									Catch.open(CatchAIS);
+									Catch.start();
 
-							FlagCatchSound = 1;
-						} catch(Exception ex) {}
+									FlagCatchSound = 1;
+								} catch(Exception ex) {}
+							}}).start();} catch (IllegalThreadStateException e) {}
 
 						Pontuacao++;
 						Espaco = "";
