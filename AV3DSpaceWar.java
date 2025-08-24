@@ -11,7 +11,7 @@
  * 
  * Licença de uso: Atribuição-NãoComercial-CompartilhaIgual (CC BY-NC-SA).
  * 
- * Última atualização: 16-04-2025.
+ * Última atualização: 24-08-2025.
  */
 
 import java.lang.IllegalThreadStateException;
@@ -71,7 +71,6 @@ public class AV3DSpaceWar extends JComponent
 	public static double DistanciaTela = 2; // Default: 2.
 	public static double DeslocamentoLinear = 1; // Default: 1.
 	public static double DeslocamentoAngular = 0.05; // Default: 0.05.
-	public static double FatorDeslocamentoTrick = 4; // Default: 4.
 	public static int TamanhoAlvo = 3; // Default: 3.
 	public static int DivisoesAlvo = 1; // Default: 1.
 	public int TipoAlvo = 0; // Default: 0.
@@ -89,7 +88,7 @@ public class AV3DSpaceWar extends JComponent
 	public static int ShiftDisparoZ = 2; // Default: 2.
 	public static double ComprimentoDisparo = 20; // Default: 20.
 	public static double DistanciaCapturaAlvo = 3; // Default: 3.
-	public static double AnguloDirecaoIr = 9 * Math.PI / 10; // Default: 9 * Math.PI / 10.
+	public static double AnguloDirecaoIr = Math.PI / 2; // Default: Math.PI / 2.
 	public static Color BackgroundCor = Color.BLACK; // Default: Color.BLACK.
 	public static Color CorAlvo = Color.WHITE; // Default: Color.WHITE.
 	public static Color CorGuias = Color.GREEN; // Default: Color.GREEN.
@@ -97,6 +96,7 @@ public class AV3DSpaceWar extends JComponent
 	public static Color StatusTextoCor = Color.WHITE; // Default: Color.WHITE.
 	public static Color StatusDistanciaCor = Color.GREEN; // Default: Color.GREEN.
 	public static double FatorTonalidadeAproximacao = 30; // Default: 30.
+	public static double TricksFactor = 0.2; // Default: 0.2.
 	public static String ArquivoSomCatch = "ES_PREL Hit Laser 4 - SFX Producer.wav";
 	public static String ArquivoSomBGM10x = "ES_Wind Drone Winter - SFX Producer - 1x.wav";
 	public static String ArquivoSomBGM15x = "ES_Wind Drone Winter - SFX Producer - 1.5x.wav";
@@ -143,8 +143,7 @@ public class AV3DSpaceWar extends JComponent
 	public double Zdisparo;
 	public double Teta = 0;
 	public double Phi = 0;
-	public double Teta0;
-	public double Phi0;
+	public double Rot = 0;
 
 	public int FlagArquivo;
 
@@ -332,15 +331,15 @@ public class AV3DSpaceWar extends JComponent
 					z = 50;
 					Teta = 0;
 					Phi = 0;
-					Teta0 = Teta; Phi0 = Phi;
+					Rot = 0;
 
 					FlagPausa = 1;
 					}
 
 				if (keyCode == KeyEvent.VK_P)
-					{Teta0 = Teta; Phi0 = Phi; if (FlagPausa == 1) FlagPausa = 0; else {BGM.stop(); BGM.close(); FlagBGM = 0; FlagPausa = 1;}}
+					{if (FlagPausa == 1) FlagPausa = 0; else {BGM.stop(); BGM.close(); FlagBGM = 0; FlagPausa = 1;}}
 
-				if (keyCode == KeyEvent.VK_A) {Teta0 = Teta; Phi0 = Phi; if (FlagPausa == 0) 
+				if (keyCode == KeyEvent.VK_A) {if (FlagPausa == 0) 
 					if (Velocidade < LimiteSuperiorVelocidade)
 						{
 						Velocidade += IncrementoVelocidade;
@@ -351,7 +350,7 @@ public class AV3DSpaceWar extends JComponent
 						FlagBGM = 0;
 						}}
 
-				if (keyCode == KeyEvent.VK_Z) {Teta0 = Teta; Phi0 = Phi; if (FlagPausa == 0) 
+				if (keyCode == KeyEvent.VK_Z) {if (FlagPausa == 0) 
 					if (Velocidade > LimiteInferiorVelocidade)
 						{
 						Velocidade -= IncrementoVelocidade;
@@ -366,21 +365,21 @@ public class AV3DSpaceWar extends JComponent
 						}}
 
 				if (keyCode == KeyEvent.VK_Q) 
-					{Teta0 = Teta; Phi0 = Phi; TipoAlvo++; TipoAlvo %= 2;}
+					{TipoAlvo++; TipoAlvo %= 2;}
 
 				if (keyCode == KeyEvent.VK_UP) if (FlagPausa == 0) 
-					{Teta0 = Teta; Phi0 = Phi; if (ke.isShiftDown()) {if (Math.abs(Phi) < Double.MAX_VALUE - MargemMaxValue - DeslocamentoAngular / 10) {Phi += DeslocamentoAngular / 10;} else {Phi = 0;}} else {if (Math.abs(Phi) < Double.MAX_VALUE - MargemMaxValue - DeslocamentoAngular) {Phi += DeslocamentoAngular;} else {Phi = 0;}}}
+					{if (ke.isShiftDown()) {if ((Math.abs(Teta) < Double.MAX_VALUE - MargemMaxValue + DeslocamentoAngular / 10 * Math.sin(Rot)) && (Math.abs(Phi) < Double.MAX_VALUE - MargemMaxValue + DeslocamentoAngular / 10 * Math.cos(Rot) * Math.cos(Phi)) && Math.abs(Rot) < Double.MAX_VALUE - MargemMaxValue + DeslocamentoAngular / 10 * Math.sin(Rot) * Math.sin(Phi)) {Teta += DeslocamentoAngular / 10 * Math.sin(Rot); Phi += DeslocamentoAngular / 10 * Math.cos(Rot) * Math.cos(Phi); Rot += DeslocamentoAngular / 10 * Math.sin(Rot) * Math.sin(Phi);} else {Teta = 0; Phi = 0; Rot = 0;}} else {if ((Math.abs(Teta) < Double.MAX_VALUE - MargemMaxValue + DeslocamentoAngular * Math.sin(Rot)) && (Math.abs(Phi) < Double.MAX_VALUE - MargemMaxValue + DeslocamentoAngular * Math.cos(Rot) * Math.cos(Phi)) && Math.abs(Rot) < Double.MAX_VALUE - MargemMaxValue + DeslocamentoAngular * Math.sin(Rot) * Math.sin(Phi)) {Teta += DeslocamentoAngular * Math.sin(Rot); Phi += DeslocamentoAngular * Math.cos(Rot) * Math.cos(Phi); Rot += DeslocamentoAngular * Math.sin(Rot) * Math.sin(Phi);} else {Teta = 0; Phi = 0; Rot = 0;}}}
 
 				if (keyCode == KeyEvent.VK_DOWN) if (FlagPausa == 0) 
-					{Teta0 = Teta; Phi0 = Phi; if (ke.isShiftDown()) {if (Math.abs(Phi) < Double.MAX_VALUE - MargemMaxValue - DeslocamentoAngular / 10) {Phi -= DeslocamentoAngular / 10;} else {Phi = 0;}} else {if (Math.abs(Phi) < Double.MAX_VALUE - MargemMaxValue - DeslocamentoAngular) {Phi -= DeslocamentoAngular;} else {Phi = 0;}}}
+					{if (ke.isShiftDown()) {if ((Math.abs(Teta) < Double.MAX_VALUE - MargemMaxValue - DeslocamentoAngular / 10 * Math.sin(Rot)) && (Math.abs(Phi) < Double.MAX_VALUE - MargemMaxValue - DeslocamentoAngular / 10 * Math.cos(Rot) * Math.cos(Phi)) && Math.abs(Rot) < Double.MAX_VALUE - MargemMaxValue - DeslocamentoAngular / 10 * Math.sin(Rot) * Math.sin(Phi)) {Teta -= DeslocamentoAngular / 10 * Math.sin(Rot); Phi -= DeslocamentoAngular / 10 * Math.cos(Rot) * Math.cos(Phi); Rot -= DeslocamentoAngular / 10 * Math.sin(Rot) * Math.sin(Phi);} else {Teta = 0; Phi = 0; Rot = 0;}} else {if ((Math.abs(Teta) < Double.MAX_VALUE - MargemMaxValue - DeslocamentoAngular * Math.sin(Rot)) && (Math.abs(Phi) < Double.MAX_VALUE - MargemMaxValue - DeslocamentoAngular * Math.cos(Rot) * Math.cos(Phi)) && Math.abs(Rot) < Double.MAX_VALUE - MargemMaxValue - DeslocamentoAngular * Math.sin(Rot) * Math.sin(Phi)) {Teta -= DeslocamentoAngular * Math.sin(Rot); Phi -= DeslocamentoAngular * Math.cos(Rot) * Math.cos(Phi); Rot -= DeslocamentoAngular * Math.sin(Rot) * Math.sin(Phi);} else {Teta = 0; Phi = 0; Rot = 0;}}}
 
 				if (keyCode == KeyEvent.VK_LEFT) if (FlagPausa == 0) 
-					{if (ke.isShiftDown()) {if (Math.abs(Teta) < Double.MAX_VALUE - MargemMaxValue - DeslocamentoAngular / 10 * Math.cos(Phi0)) {Teta += DeslocamentoAngular / 10 * Math.cos(Phi0); x -= FatorDeslocamentoTrick * DeslocamentoLinear / 10 * Math.abs(Math.sin(Phi0)) * Math.sin(Teta0); y -= FatorDeslocamentoTrick * DeslocamentoLinear / 10 * Math.abs(Math.sin(Phi0)) * Math.cos(Teta0);} else {Teta = 0;}} else {if (Math.abs(Teta) < Double.MAX_VALUE - MargemMaxValue - DeslocamentoAngular * Math.cos(Phi0)) {Teta += DeslocamentoAngular * Math.cos(Phi0); x -= FatorDeslocamentoTrick * DeslocamentoLinear * Math.abs(Math.sin(Phi0)) * Math.sin(Teta0); y -= FatorDeslocamentoTrick * DeslocamentoLinear * Math.abs(Math.sin(Phi0)) * Math.cos(Teta0);} else {Teta = 0;}}}
+					{if (ke.isShiftDown()) {if ((Math.abs(Teta) < Double.MAX_VALUE - MargemMaxValue + DeslocamentoAngular / 10 * Math.cos(Rot)) && (Math.abs(Phi) < Double.MAX_VALUE - MargemMaxValue - DeslocamentoAngular / 10 * Math.sin(Rot) * Math.cos(Phi)) && (Math.abs(Rot) < Double.MAX_VALUE - MargemMaxValue - DeslocamentoAngular / 10 * Math.cos(Rot) * Math.sin(Phi))) {Teta += DeslocamentoAngular / 10 * Math.cos(Rot); Phi -= DeslocamentoAngular / 10 * Math.sin(Rot) * Math.cos(Phi); Rot += DeslocamentoAngular / 10 * Math.cos(Rot) * Math.sin(Phi);} else {Teta = 0; Phi = 0; Rot = 0;}} else {if ((Math.abs(Teta) < Double.MAX_VALUE - MargemMaxValue + DeslocamentoAngular * Math.cos(Rot)) && (Math.abs(Phi) < Double.MAX_VALUE - MargemMaxValue - DeslocamentoAngular * Math.sin(Rot) * Math.cos(Phi)) && (Math.abs(Rot) < Double.MAX_VALUE - MargemMaxValue + DeslocamentoAngular * Math.cos(Rot) * Math.sin(Phi))) {Teta += DeslocamentoAngular * Math.cos(Rot); Phi -= DeslocamentoAngular * Math.sin(Rot) * Math.cos(Phi); Rot += DeslocamentoAngular * Math.cos(Rot) * Math.sin(Phi);} else {Teta = 0; Phi = 0; Rot = 0;}}}
 
 				if (keyCode == KeyEvent.VK_RIGHT) if (FlagPausa == 0) 
-					{if (ke.isShiftDown()) {if (Math.abs(Teta) < Double.MAX_VALUE - MargemMaxValue - DeslocamentoAngular / 10 * Math.cos(Phi0)) {Teta -= DeslocamentoAngular / 10 * Math.cos(Phi0); x += FatorDeslocamentoTrick * DeslocamentoLinear / 10 * Math.abs(Math.sin(Phi0)) * Math.sin(Teta0); y += FatorDeslocamentoTrick * DeslocamentoLinear / 10 * Math.abs(Math.sin(Phi0)) * Math.cos(Teta0);} else {Teta = 0;}} else {if (Math.abs(Teta) < Double.MAX_VALUE - MargemMaxValue - DeslocamentoAngular * Math.cos(Phi0)) {Teta -= DeslocamentoAngular * Math.cos(Phi0); x += FatorDeslocamentoTrick * DeslocamentoLinear * Math.abs(Math.sin(Phi0)) * Math.sin(Teta0); y += FatorDeslocamentoTrick * DeslocamentoLinear * Math.abs(Math.sin(Phi0)) * Math.cos(Teta0);} else {Teta = 0;}}}
+					{if (ke.isShiftDown()) {if ((Math.abs(Teta) < Double.MAX_VALUE - MargemMaxValue - DeslocamentoAngular / 10 * Math.cos(Rot)) && (Math.abs(Phi) < Double.MAX_VALUE + MargemMaxValue + DeslocamentoAngular / 10 * Math.sin(Rot) * Math.cos(Phi)) && (Math.abs(Rot) < Double.MAX_VALUE - MargemMaxValue - DeslocamentoAngular / 10 * Math.cos(Rot) * Math.sin(Phi))) {Teta -= DeslocamentoAngular / 10 * Math.cos(Rot); Phi += DeslocamentoAngular / 10 * Math.sin(Rot) * Math.cos(Phi); Rot -= DeslocamentoAngular / 10 * Math.cos(Rot) * Math.sin(Phi);} else {Teta = 0; Phi = 0; Rot = 0;}} else {if ((Math.abs(Teta) < Double.MAX_VALUE - MargemMaxValue - DeslocamentoAngular * Math.cos(Rot)) && (Math.abs(Phi) < Double.MAX_VALUE - MargemMaxValue + DeslocamentoAngular * Math.sin(Rot) * Math.cos(Phi)) && (Math.abs(Rot) < Double.MAX_VALUE - MargemMaxValue - DeslocamentoAngular * Math.cos(Rot) * Math.sin(Phi))) {Teta -= DeslocamentoAngular * Math.cos(Rot); Phi += DeslocamentoAngular * Math.sin(Rot) * Math.cos(Phi); Rot -= DeslocamentoAngular * Math.cos(Rot) * Math.sin(Phi);} else {Teta = 0; Phi = 0; Rot = 0;}}}
 
-				if (keyCode == KeyEvent.VK_S) {Teta0 = Teta; Phi0 = Phi; if (FlagPausa == 0)
+				if (keyCode == KeyEvent.VK_S) {if (FlagPausa == 0)
 					{
 					if (Disparo.equals(""))
 						Disparo = String.valueOf(x + ShiftDisparoZ * Math.sin(Phi) * Math.cos(-Teta)) + "," + String.valueOf(y + ShiftDisparoZ * Math.sin(Phi) * Math.sin(-Teta)) + "," + String.valueOf(z + ShiftDisparoZ * Math.cos(Phi)) + ";" + String.valueOf(x + ShiftDisparoZ * Math.sin(Phi) * Math.cos(-Teta) + ComprimentoDisparo * Math.cos(-Phi) * Math.cos(-Teta)) + "," + String.valueOf(y + ShiftDisparoZ * Math.sin(Phi) * Math.sin(-Teta) + ComprimentoDisparo * Math.cos(-Phi) * Math.sin(-Teta)) + "," + String.valueOf(z + ShiftDisparoZ * Math.cos(Phi) + ComprimentoDisparo * Math.sin(-Phi));
@@ -619,6 +618,8 @@ public class AV3DSpaceWar extends JComponent
 
 			if ((Math.abs(Xalvo) > Double.MAX_VALUE - MargemMaxValue) || (Math.abs(Yalvo) > Double.MAX_VALUE - MargemMaxValue) || (Math.abs(Zalvo) > Double.MAX_VALUE - MargemMaxValue)) {Xalvo = 0; Yalvo = 0; Zalvo = 0;}
 
+			if ((Math.abs(Math.sin(Rot)) < TricksFactor / 2) || (Math.abs(Math.cos(Rot)) < TricksFactor / 2)) Rot += (Math.cos(Phi) >= 0 ? 1 : -1) * TricksFactor / 10 * DeslocamentoAngular;
+
 			if (FlagCatchSound == 1)
 				{try {Thread.sleep(100);} catch(InterruptedException e){}; Catch.close(); FlagCatchSound = 0;}
 			else
@@ -680,13 +681,13 @@ public class AV3DSpaceWar extends JComponent
 					int xf;
 					int yf;
 
-					double xit = xo * Math.sin(Teta) + yo * Math.cos(Teta);
+					double xit = (xo * Math.sin(Teta) + yo * Math.cos(Teta)) * Math.cos(Rot) - (xo * Math.cos(Teta) * Math.sin(Phi) - yo * Math.sin(Teta) * Math.sin(Phi) + zo * Math.cos(Phi)) * Math.sin(Rot);
 
-					double yit = xo * Math.cos(Teta) * Math.sin(Phi) - yo * Math.sin(Teta) * Math.sin(Phi) + zo * Math.cos(Phi);
+					double yit = (xo * Math.sin(Teta) + yo * Math.cos(Teta)) * Math.sin(Rot) + (xo * Math.cos(Teta) * Math.sin(Phi) - yo * Math.sin(Teta) * Math.sin(Phi) + zo * Math.cos(Phi)) * Math.cos(Rot);
 
-					double xft = xd * Math.sin(Teta) + yd * Math.cos(Teta);
+					double xft = (xd * Math.sin(Teta) + yd * Math.cos(Teta)) * Math.cos(Rot) - (xd * Math.cos(Teta) * Math.sin(Phi) - yd * Math.sin(Teta) * Math.sin(Phi) + zd * Math.cos(Phi)) * Math.sin(Rot);
 
-					double yft = xd * Math.cos(Teta) * Math.sin(Phi) - yd * Math.sin(Teta) * Math.sin(Phi) + zd * Math.cos(Phi);
+					double yft = (xd * Math.sin(Teta) + yd * Math.cos(Teta)) * Math.sin(Rot) + (xd * Math.cos(Teta) * Math.sin(Phi) - yd * Math.sin(Teta) * Math.sin(Phi) + zd * Math.cos(Phi)) * Math.cos(Rot);
 
 					double di = Math.sqrt(xo * xo + yo * yo + zo * zo);
 
