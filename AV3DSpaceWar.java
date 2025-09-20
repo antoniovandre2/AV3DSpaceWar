@@ -11,7 +11,7 @@
  * 
  * Licença de uso: Atribuição-NãoComercial-CompartilhaIgual (CC BY-NC-SA).
  * 
- * Última atualização: 18-09-2025.
+ * Última atualização: 20-09-2025.
  */
 
 import java.lang.IllegalThreadStateException;
@@ -70,7 +70,7 @@ public class AV3DSpaceWar extends JComponent
 	public static int TamanhoFonteLabelDistancia = 10; // Default: 10.
 	public static double DistanciaTela = 2; // Default: 2.
 	public static double DeslocamentoLinear = 1; // Default: 1.
-	public static double DeslocamentoAngular = 0.05; // Default: 0.05.
+	public static double DeslocamentoAngularStatic = 0.05; // Default: 0.05.
 	public static int TamanhoAlvo = 3; // Default: 3.
 	public static int DivisoesAlvo = 1; // Default: 1.
 	public int TipoAlvo = 0; // Default: 0.
@@ -87,7 +87,7 @@ public class AV3DSpaceWar extends JComponent
 	public static double VelocidadeDisparo = 300; // Default: 300.
 	public static int ShiftDisparoZ = 2; // Default: 2.
 	public static double ComprimentoDisparo = 20; // Default: 20.
-	public static double DistanciaCapturaAlvo = 3; // Default: 3.
+	public static double DistanciaCapturaAlvo = 5; // Default: 5.
 	public static double AnguloDirecaoIr = Math.PI / 2; // Default: Math.PI / 2.
 	public static Color BackgroundCor = Color.BLACK; // Default: Color.BLACK.
 	public static Color CorAlvo = Color.WHITE; // Default: Color.WHITE.
@@ -105,6 +105,7 @@ public class AV3DSpaceWar extends JComponent
 
 	// Variáveis de funcionamento interno. Evite alterar.
 
+	public double DeslocamentoAngular = DeslocamentoAngularStatic;
 	public long ValorInteiroLong;
 	public static int CorrecaoX = 10;
 	public static int CorrecaoY = 0;
@@ -618,7 +619,12 @@ public class AV3DSpaceWar extends JComponent
 
 			if ((Math.abs(Xalvo) > Double.MAX_VALUE - MargemMaxValue) || (Math.abs(Yalvo) > Double.MAX_VALUE - MargemMaxValue) || (Math.abs(Zalvo) > Double.MAX_VALUE - MargemMaxValue)) {Xalvo = 0; Yalvo = 0; Zalvo = 0;}
 
+			// Tricks scope.
+
 			if ((Math.abs(Math.sin(Rot)) < TricksFactor / 2) || (Math.abs(Math.cos(Rot)) < TricksFactor / 2)) Rot += (Math.cos(Phi) >= 0 ? 1 : -1) * TricksFactor / 10 * DeslocamentoAngular;
+
+			DeslocamentoAngular = DeslocamentoAngularStatic / Math.max(Math.abs(Math.cos(Phi)), TricksFactor);
+
 
 			if (FlagCatchSound == 1)
 				{try {Thread.sleep(100);} catch(InterruptedException e){}; Catch.close(); FlagCatchSound = 0;}
