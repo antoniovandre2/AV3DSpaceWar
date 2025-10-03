@@ -39,9 +39,21 @@ import javax.swing.JLabel;
 
 import java.lang.Math;
 
-import java.io.*;
+import java.util.Timer;
+import java.util.TimerTask;
 
-import javax.sound.sampled.*;
+import java.io.File;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.InputStream;
+import java.io.BufferedInputStream;
+import java.io.IOException;
+
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.AudioInputStream;
+import javax.sound.sampled.Clip;
 
 import AntonioVandre.*;
 
@@ -84,6 +96,8 @@ public class AV3DSpaceWar extends JComponent
 	public static double LimiteXdisparo = 1000; // Default: 1000.
 	public static double LimiteYdisparo = 1000; // Default: 1000.
 	public static double LimiteZdisparo = 1000; // Default: 1000.
+	public static int MaxDisparos = 5; // Default: 5.
+	public static int TempoRecarregar = 5; // Default: 5.
 	public static double VelocidadeDisparo = 300; // Default: 300.
 	public static double TamanhoNivel = 10; // Default: 5.
 	public static int ShiftDisparoZ = 2; // Default: 2.
@@ -93,8 +107,8 @@ public class AV3DSpaceWar extends JComponent
 	public static Color BackgroundCor = Color.BLACK; // Default: Color.BLACK.
 	public static Color CorAlvo = Color.WHITE; // Default: Color.WHITE.
 	public static Color CorGuias = Color.GREEN; // Default: Color.GREEN.
-	public static Color CorDisparo = Color.GREEN; // Default: Color.GREEN.
-	public static Color CorNivel = Color.CYAN; // Default: Color.CYAN.
+	public static Color CorDisparo = Color.CYAN; // Default: Color.GREEN.
+	public static Color CorNivel = Color.GREEN; // Default: Color.CYAN.
 	public static Color StatusBackgroundCor = new Color(32, 32, 32); // Default: Color(32, 32, 32).
 	public static Color StatusTextoCor = Color.WHITE; // Default: Color.WHITE.
 	public static Color StatusDistanciaCor = Color.GREEN; // Default: Color.GREEN.
@@ -110,6 +124,7 @@ public class AV3DSpaceWar extends JComponent
 
 	public double DeslocamentoAngular = DeslocamentoAngularStatic;
 	public long ValorInteiroLong;
+	public int DisparosC = MaxDisparos;
 	public static int CorrecaoX = 10;
 	public static int CorrecaoY = 0;
 	public double AnguloVisao;
@@ -254,6 +269,14 @@ public class AV3DSpaceWar extends JComponent
 			} catch (Exception e) {}
 		}
 
+	Timer timer = new Timer();
+
+	TimerTask Recarregar = new TimerTask() {
+		public void run() {
+			if (FlagPausa == 0) if (DisparosC < MaxDisparos) DisparosC++;
+		}
+	};
+
 	public static void main (String[] args) {AV3DSpaceWar mainc = new AV3DSpaceWar(); if (args.length == 0) mainc.mainrun(""); else mainc.mainrun(args[0]);}
 
 	public void mainrun (String ArquivoEstatisticas)
@@ -385,10 +408,15 @@ public class AV3DSpaceWar extends JComponent
 
 				if (keyCode == KeyEvent.VK_S) {if (FlagPausa == 0)
 					{
-					if (Disparo.equals(""))
-						Disparo = String.valueOf(x + ShiftDisparoZ * Math.sin(Phi) * Math.cos(-Teta)) + "," + String.valueOf(y + ShiftDisparoZ * Math.sin(Phi) * Math.sin(-Teta)) + "," + String.valueOf(z + ShiftDisparoZ * Math.cos(Phi)) + ";" + String.valueOf(x + ShiftDisparoZ * Math.sin(Phi) * Math.cos(-Teta) + ComprimentoDisparo * Math.cos(-Phi) * Math.cos(-Teta)) + "," + String.valueOf(y + ShiftDisparoZ * Math.sin(Phi) * Math.sin(-Teta) + ComprimentoDisparo * Math.cos(-Phi) * Math.sin(-Teta)) + "," + String.valueOf(z + ShiftDisparoZ * Math.cos(Phi) + ComprimentoDisparo * Math.sin(-Phi));
-					else
-						Disparo = Disparo + "|" + String.valueOf(x + ShiftDisparoZ * Math.sin(Phi) * Math.cos(-Teta)) + "," + String.valueOf(y + ShiftDisparoZ * Math.sin(Phi) * Math.sin(-Teta)) + "," + String.valueOf(z + ShiftDisparoZ * Math.cos(Phi)) + ";" + String.valueOf(x + ShiftDisparoZ * Math.sin(Phi) * Math.cos(-Teta) + ComprimentoDisparo * Math.cos(-Phi) * Math.cos(-Teta)) + "," + String.valueOf(y + ShiftDisparoZ * Math.sin(Phi) * Math.sin(-Teta) + ComprimentoDisparo * Math.cos(-Phi) * Math.sin(-Teta)) + "," + String.valueOf(z + ShiftDisparoZ * Math.cos(Phi) + ComprimentoDisparo * Math.sin(-Phi));
+					if (DisparosC > 0)
+						{
+						if (Disparo.equals(""))
+							Disparo = String.valueOf(x + ShiftDisparoZ * Math.sin(Phi) * Math.cos(-Teta)) + "," + String.valueOf(y + ShiftDisparoZ * Math.sin(Phi) * Math.sin(-Teta)) + "," + String.valueOf(z + ShiftDisparoZ * Math.cos(Phi)) + ";" + String.valueOf(x + ShiftDisparoZ * Math.sin(Phi) * Math.cos(-Teta) + ComprimentoDisparo * Math.cos(-Phi) * Math.cos(-Teta)) + "," + String.valueOf(y + ShiftDisparoZ * Math.sin(Phi) * Math.sin(-Teta) + ComprimentoDisparo * Math.cos(-Phi) * Math.sin(-Teta)) + "," + String.valueOf(z + ShiftDisparoZ * Math.cos(Phi) + ComprimentoDisparo * Math.sin(-Phi));
+						else
+							Disparo = Disparo + "|" + String.valueOf(x + ShiftDisparoZ * Math.sin(Phi) * Math.cos(-Teta)) + "," + String.valueOf(y + ShiftDisparoZ * Math.sin(Phi) * Math.sin(-Teta)) + "," + String.valueOf(z + ShiftDisparoZ * Math.cos(Phi)) + ";" + String.valueOf(x + ShiftDisparoZ * Math.sin(Phi) * Math.cos(-Teta) + ComprimentoDisparo * Math.cos(-Phi) * Math.cos(-Teta)) + "," + String.valueOf(y + ShiftDisparoZ * Math.sin(Phi) * Math.sin(-Teta) + ComprimentoDisparo * Math.cos(-Phi) * Math.sin(-Teta)) + "," + String.valueOf(z + ShiftDisparoZ * Math.cos(Phi) + ComprimentoDisparo * Math.sin(-Phi));
+
+						DisparosC--;
+						}
 					}}
 				}
 
@@ -398,6 +426,8 @@ public class AV3DSpaceWar extends JComponent
 
 		FameAV3DSpaceWar.pack();
 		FameAV3DSpaceWar.setVisible(true);
+
+		timer.schedule(Recarregar, TempoRecarregar * 1000, TempoRecarregar * 1000);
 
 		while (Sair == 0)
 			{
@@ -634,6 +664,7 @@ public class AV3DSpaceWar extends JComponent
 			else
 				try {Thread.sleep(10);} catch(InterruptedException e) {}
 
+			
 			if (FlagPausa == 0) {DesenharEspacoDisparo(comp); DesenharEspaco(comp);}
 			}
 
@@ -656,6 +687,9 @@ public class AV3DSpaceWar extends JComponent
 
 				comp.addLineG((int) (TamanhoPlanoX / 2 - CorrecaoX - Math.cos(Rot) * TamanhoNivel), (int) (TamanhoPlanoY / 2 - CorrecaoY -  Math.sin(Rot) * TamanhoNivel), (int) (TamanhoPlanoX / 2 - CorrecaoX + Math.cos(Rot) * TamanhoNivel), (int) (TamanhoPlanoY / 2 - CorrecaoY +  Math.sin(Rot) * TamanhoNivel), CorNivel, i == EspacoLinhas.length - 1 ? Integer.MAX_VALUE : i);
 
+				for (j = 1; j <= DisparosC; j++)
+					comp.addLineG(5 * j, TamanhoPlanoY - CorrecaoY - 5, 5 * j, TamanhoPlanoY - CorrecaoY - 10, CorDisparo, i == EspacoLinhas.length - 1 ? Integer.MAX_VALUE : i);
+					
 				if (Pontos.length == 2)
 					{
 					String [] CoordenadasOrig = Pontos[0].split(",");
