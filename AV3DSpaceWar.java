@@ -85,6 +85,7 @@ public class AV3DSpaceWar extends JComponent
 	public static double LimiteYdisparo = 1000; // Default: 1000.
 	public static double LimiteZdisparo = 1000; // Default: 1000.
 	public static double VelocidadeDisparo = 300; // Default: 300.
+	public static double TamanhoNivel = 10; // Default: 5.
 	public static int ShiftDisparoZ = 2; // Default: 2.
 	public static double ComprimentoDisparo = 20; // Default: 20.
 	public static double DistanciaCapturaAlvo = 5; // Default: 5.
@@ -92,7 +93,8 @@ public class AV3DSpaceWar extends JComponent
 	public static Color BackgroundCor = Color.BLACK; // Default: Color.BLACK.
 	public static Color CorAlvo = Color.WHITE; // Default: Color.WHITE.
 	public static Color CorGuias = Color.GREEN; // Default: Color.GREEN.
-	public static Color CorDisparo = Color.GREEN; // Default: "0,255,0".
+	public static Color CorDisparo = Color.GREEN; // Default: Color.GREEN.
+	public static Color CorNivel = Color.CYAN; // Default: Color.CYAN.
 	public static Color StatusBackgroundCor = new Color(32, 32, 32); // Default: Color(32, 32, 32).
 	public static Color StatusTextoCor = Color.WHITE; // Default: Color.WHITE.
 	public static Color StatusDistanciaCor = Color.GREEN; // Default: Color.GREEN.
@@ -651,6 +653,8 @@ public class AV3DSpaceWar extends JComponent
 			for (i = 0; i < EspacoLinhas.length; i++)
 				{
 				String [] Pontos = EspacoLinhas[i].split(";");
+
+				comp.addLineG((int) (TamanhoPlanoX / 2 - CorrecaoX - Math.cos(Rot) * TamanhoNivel), (int) (TamanhoPlanoY / 2 - CorrecaoY -  Math.sin(Rot) * TamanhoNivel), (int) (TamanhoPlanoX / 2 - CorrecaoX + Math.cos(Rot) * TamanhoNivel), (int) (TamanhoPlanoY / 2 - CorrecaoY +  Math.sin(Rot) * TamanhoNivel), CorNivel, i == EspacoLinhas.length - 1 ? Integer.MAX_VALUE : i);
 
 				if (Pontos.length == 2)
 					{
