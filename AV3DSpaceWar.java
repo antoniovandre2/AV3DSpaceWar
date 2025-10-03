@@ -832,13 +832,13 @@ public class AV3DSpaceWar extends JComponent
 					int xf;
 					int yf;
 
-					double xit = xo * Math.sin(Teta) + yo * Math.cos(Teta);
+					double xit = (xo * Math.sin(Teta) + yo * Math.cos(Teta)) * Math.cos(Rot) - (xo * Math.cos(Teta) * Math.sin(Phi) - yo * Math.sin(Teta) * Math.sin(Phi) + zo * Math.cos(Phi)) * Math.sin(Rot);
 
-					double yit = xo * Math.cos(Teta) * Math.sin(Phi) - yo * Math.sin(Teta) * Math.sin(Phi) + zo * Math.cos(Phi);
+					double yit = (xo * Math.sin(Teta) + yo * Math.cos(Teta)) * Math.sin(Rot) + (xo * Math.cos(Teta) * Math.sin(Phi) - yo * Math.sin(Teta) * Math.sin(Phi) + zo * Math.cos(Phi)) * Math.cos(Rot);
 
-					double xft = xd * Math.sin(Teta) + yd * Math.cos(Teta);
+					double xft = (xd * Math.sin(Teta) + yd * Math.cos(Teta)) * Math.cos(Rot) - (xd * Math.cos(Teta) * Math.sin(Phi) - yd * Math.sin(Teta) * Math.sin(Phi) + zd * Math.cos(Phi)) * Math.sin(Rot);
 
-					double yft = xd * Math.cos(Teta) * Math.sin(Phi) - yd * Math.sin(Teta) * Math.sin(Phi) + zd * Math.cos(Phi);
+					double yft = (xd * Math.sin(Teta) + yd * Math.cos(Teta)) * Math.sin(Rot) + (xd * Math.cos(Teta) * Math.sin(Phi) - yd * Math.sin(Teta) * Math.sin(Phi) + zd * Math.cos(Phi)) * Math.cos(Rot);
 
 					double di = Math.sqrt(xo * xo + yo * yo + zo * zo);
 
