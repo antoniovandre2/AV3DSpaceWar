@@ -11,7 +11,7 @@
  * 
  * Licença de uso: Atribuição-NãoComercial-CompartilhaIgual (CC BY-NC-SA).
  * 
- * Última atualização: 03-10-2025.
+ * Última atualização: 04-10-2025.
  */
 
 import java.lang.IllegalThreadStateException;
@@ -685,7 +685,7 @@ public class AV3DSpaceWar extends JComponent
 				{
 				String [] Pontos = EspacoLinhas[i].split(";");
 
-				comp.addLineG((int) (TamanhoPlanoX / 2 - CorrecaoX - Math.cos(-Rot) * TamanhoNivel), (int) (TamanhoPlanoY / 2 - CorrecaoY -  Math.sin(-Rot) * TamanhoNivel), (int) (TamanhoPlanoX / 2 - CorrecaoX + Math.cos(-Rot) * TamanhoNivel), (int) (TamanhoPlanoY / 2 - CorrecaoY +  Math.sin(-Rot) * TamanhoNivel), CorNivel, i == EspacoLinhas.length - 1 ? Integer.MAX_VALUE : i);
+				comp.addLineG((int) (TamanhoPlanoX / 2 - CorrecaoX - Math.cos(Rot) * TamanhoNivel), (int) (TamanhoPlanoY / 2 - CorrecaoY - Math.sin(Rot) * TamanhoNivel), (int) (TamanhoPlanoX / 2 - CorrecaoX + Math.cos(Rot) * TamanhoNivel), (int) (TamanhoPlanoY / 2 - CorrecaoY +  Math.sin(Rot) * TamanhoNivel), CorNivel, i == EspacoLinhas.length - 1 ? Integer.MAX_VALUE : i);
 
 				for (j = 1; j <= DisparosC; j++)
 					comp.addLineG(5 * j, TamanhoPlanoY - CorrecaoY - 5, 5 * j, TamanhoPlanoY - CorrecaoY - 10, CorDisparo, i == EspacoLinhas.length - 1 ? Integer.MAX_VALUE : i);
