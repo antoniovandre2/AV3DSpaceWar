@@ -11,7 +11,7 @@
  * 
  * Licença de uso: Atribuição-NãoComercial-CompartilhaIgual (CC BY-NC-SA).
  * 
- * Última atualização: 04-10-2025.
+ * Última atualização: 14-10-2025.
  */
 
 import java.lang.IllegalThreadStateException;
@@ -411,9 +411,9 @@ public class AV3DSpaceWar extends JComponent
 					if (DisparosC > 0)
 						{
 						if (Disparo.equals(""))
-							Disparo = String.valueOf(x + ShiftDisparoZ * Math.sin(Phi) * Math.cos(-Teta)) + "," + String.valueOf(y + ShiftDisparoZ * Math.sin(Phi) * Math.sin(-Teta)) + "," + String.valueOf(z + ShiftDisparoZ * Math.cos(Phi)) + ";" + String.valueOf(x + ShiftDisparoZ * Math.sin(Phi) * Math.cos(-Teta) + ComprimentoDisparo * Math.cos(-Phi) * Math.cos(-Teta)) + "," + String.valueOf(y + ShiftDisparoZ * Math.sin(Phi) * Math.sin(-Teta) + ComprimentoDisparo * Math.cos(-Phi) * Math.sin(-Teta)) + "," + String.valueOf(z + ShiftDisparoZ * Math.cos(Phi) + ComprimentoDisparo * Math.sin(-Phi));
+							Disparo = String.valueOf(x + ShiftDisparoZ * (Math.sin(Phi) * Math.cos(Teta) * Math.cos(Rot) + Math.sin(Phi) * Math.cos(Teta - Math.PI / 2) * Math.sin(Rot))) + "," + String.valueOf(y - ShiftDisparoZ * (Math.sin(Phi) * Math.sin(Teta) * Math.cos(Rot) + Math.sin(Phi) * Math.sin(Teta - Math.PI / 2) * Math.sin(Rot))) + "," + String.valueOf(z - ShiftDisparoZ * (Math.sin(Phi - Math.PI / 2) * Math.cos(Rot))) + ";" + String.valueOf(x + ShiftDisparoZ * (Math.sin(Phi) * Math.cos(Teta) * Math.cos(Rot) + Math.sin(Phi) * Math.cos(Teta - Math.PI / 2) * Math.sin(Rot)) + ComprimentoDisparo * Math.cos(-Phi) * Math.cos(-Teta)) + "," + String.valueOf(y - ShiftDisparoZ * (Math.sin(Phi) * Math.sin(Teta) * Math.cos(Rot) + Math.sin(Phi) * Math.sin(Teta - Math.PI / 2) * Math.sin(Rot)) + ComprimentoDisparo * Math.cos(-Phi) * Math.sin(-Teta)) + "," + String.valueOf(z - ShiftDisparoZ * (Math.sin(Phi - Math.PI / 2) * Math.cos(Rot)) + ComprimentoDisparo * Math.sin(-Phi));
 						else
-							Disparo = Disparo + "|" + String.valueOf(x + ShiftDisparoZ * Math.sin(Phi) * Math.cos(-Teta)) + "," + String.valueOf(y + ShiftDisparoZ * Math.sin(Phi) * Math.sin(-Teta)) + "," + String.valueOf(z + ShiftDisparoZ * Math.cos(Phi)) + ";" + String.valueOf(x + ShiftDisparoZ * Math.sin(Phi) * Math.cos(-Teta) + ComprimentoDisparo * Math.cos(-Phi) * Math.cos(-Teta)) + "," + String.valueOf(y + ShiftDisparoZ * Math.sin(Phi) * Math.sin(-Teta) + ComprimentoDisparo * Math.cos(-Phi) * Math.sin(-Teta)) + "," + String.valueOf(z + ShiftDisparoZ * Math.cos(Phi) + ComprimentoDisparo * Math.sin(-Phi));
+							Disparo = Disparo + "|" + String.valueOf(x +ShiftDisparoZ * (Math.sin(Phi) * Math.cos(Teta) * Math.cos(Rot) + Math.sin(Phi) * Math.cos(Teta - Math.PI / 2) * Math.sin(Rot))) + "," + String.valueOf(y - ShiftDisparoZ * (Math.sin(Phi) * Math.sin(Teta) * Math.cos(Rot) + Math.sin(Phi) * Math.sin(Teta - Math.PI / 2) * Math.sin(Rot))) + "," + String.valueOf(z - ShiftDisparoZ * (Math.sin(Phi - Math.PI / 2) * Math.cos(Rot))) + ";" + String.valueOf(x + ShiftDisparoZ * (Math.sin(Phi) * Math.cos(Teta) * Math.cos(Rot) + Math.sin(Phi) * Math.cos(Teta - Math.PI / 2) * Math.sin(Rot)) + ComprimentoDisparo * Math.cos(-Phi) * Math.cos(-Teta)) + "," + String.valueOf(y - ShiftDisparoZ * (Math.sin(Phi) * Math.sin(Teta) * Math.cos(Rot) + Math.sin(Phi) * Math.sin(Teta - Math.PI / 2) * Math.sin(Rot)) + ComprimentoDisparo * Math.cos(-Phi) * Math.sin(-Teta)) + "," + String.valueOf(z - ShiftDisparoZ * (Math.sin(Phi - Math.PI / 2) * Math.cos(Rot)) + ComprimentoDisparo * Math.sin(-Phi));
 
 						DisparosC--;
 						}
