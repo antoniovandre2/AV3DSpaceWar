@@ -572,7 +572,7 @@ public class AV3DSpaceWar extends JComponent
 
 						DisparoArr[i] = String.join(";", DisparoUnidadeFeixe);
 
-						if (! ((Math.abs(Double.parseDouble(DisparoUnidade0[0]) - Xalvo) > Double.MAX_VALUE - MargemMaxValue) || (Math.abs(Double.parseDouble(DisparoUnidade0[1]) - Yalvo) > Double.MAX_VALUE - MargemMaxValue) || (Math.abs(Double.parseDouble(DisparoUnidade0[2]) - Zalvo) > Double.MAX_VALUE - MargemMaxValue))) if ((Math.abs(Double.parseDouble(DisparoUnidade0[0]) - Xalvo) <= LimiteXdisparo) && (Math.abs(Double.parseDouble(DisparoUnidade0[1]) - Yalvo) <= LimiteYdisparo) && (Math.abs(Double.parseDouble(DisparoUnidade0[2]) - Zalvo) <= LimiteZdisparo))
+						if (! ((Math.abs(Double.parseDouble(DisparoUnidade0[0]) - Xalvo) > Double.MAX_VALUE - MargemMaxValue) || (Math.abs(Double.parseDouble(DisparoUnidade0[1]) - Yalvo) > Double.MAX_VALUE - MargemMaxValue) || (Math.abs(Double.parseDouble(DisparoUnidade0[2]) - Zalvo) > Double.MAX_VALUE - MargemMaxValue))) if ((Math.abs(Double.parseDouble(DisparoUnidade0[0]) - x) <= LimiteXdisparo) && (Math.abs(Double.parseDouble(DisparoUnidade0[1]) - y) <= LimiteYdisparo) && (Math.abs(Double.parseDouble(DisparoUnidade0[2]) - z) <= LimiteZdisparo))
 							DisparoArr2[j++] = DisparoArr[i];
 						}
 
@@ -580,7 +580,7 @@ public class AV3DSpaceWar extends JComponent
 
 					for (i = 0; i < j; i++) DisparoArr3[i] = DisparoArr2[i];
 
-					Disparo = String.join("|", DisparoArr3).replaceAll(" ", "");
+					Disparo = String.join("|", DisparoArr3);
 					}
 
 				TempoR = Tempo;
