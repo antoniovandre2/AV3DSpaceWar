@@ -537,48 +537,51 @@ public class AV3DSpaceWar extends JComponent
 					default:
 					}
 
-				DisparoArr = Disparo.split("\\|");
-				String[] DisparoArr2 = new String[DisparoArr.length];
-				j = 0;
-
-				for (i = 0; i < DisparoArr.length - (Disparo.equals("") ? 1 : 0); i++)
+				if (! Disparo.equals(""))
 					{
-					String[] DisparoUnidadeFeixe = DisparoArr[i].split(";");
+					DisparoArr = Disparo.split("\\|");
+					String[] DisparoArr2 = new String[DisparoArr.length];
+					j = 0;
 
-					String[] DisparoUnidade0 = DisparoUnidadeFeixe[0].split(",");
-					String[] DisparoUnidade1 = DisparoUnidadeFeixe[1].split(",");
+					for (i = 0; i < DisparoArr.length; i++)
+						{
+						String[] DisparoUnidadeFeixe = DisparoArr[i].split(";");
 
-					String Temp0 = DisparoUnidade0[0];
-					String Temp1 = DisparoUnidade0[1];
-					String Temp2 = DisparoUnidade0[2];
+						String[] DisparoUnidade0 = DisparoUnidadeFeixe[0].split(",");
+						String[] DisparoUnidade1 = DisparoUnidadeFeixe[1].split(",");
 
-					DisparoUnidade0[0] = String.valueOf(Double.parseDouble(DisparoUnidade0[0]) + VelocidadeDisparo * (Double.parseDouble(DisparoUnidade1[0]) - Double.parseDouble(Temp0)) / ComprimentoDisparo / FramesPorSegundo);
+						String Temp0 = DisparoUnidade0[0];
+						String Temp1 = DisparoUnidade0[1];
+						String Temp2 = DisparoUnidade0[2];
 
-					DisparoUnidade0[1] = String.valueOf(Double.parseDouble(DisparoUnidade0[1]) + VelocidadeDisparo * (Double.parseDouble(DisparoUnidade1[1]) - Double.parseDouble(Temp1)) / ComprimentoDisparo / FramesPorSegundo);
+						DisparoUnidade0[0] = String.valueOf(Double.parseDouble(DisparoUnidade0[0]) + VelocidadeDisparo * (Double.parseDouble(DisparoUnidade1[0]) - Double.parseDouble(Temp0)) / ComprimentoDisparo / FramesPorSegundo);
 
-					DisparoUnidade0[2] = String.valueOf(Double.parseDouble(DisparoUnidade0[2]) + VelocidadeDisparo * (Double.parseDouble(DisparoUnidade1[2]) - Double.parseDouble(Temp2)) / ComprimentoDisparo / FramesPorSegundo);
+						DisparoUnidade0[1] = String.valueOf(Double.parseDouble(DisparoUnidade0[1]) + VelocidadeDisparo * (Double.parseDouble(DisparoUnidade1[1]) - Double.parseDouble(Temp1)) / ComprimentoDisparo / FramesPorSegundo);
 
-					DisparoUnidadeFeixe[0] = String.join(",", DisparoUnidade0);
+						DisparoUnidade0[2] = String.valueOf(Double.parseDouble(DisparoUnidade0[2]) + VelocidadeDisparo * (Double.parseDouble(DisparoUnidade1[2]) - Double.parseDouble(Temp2)) / ComprimentoDisparo / FramesPorSegundo);
 
-					DisparoUnidade1[0] = String.valueOf(Double.parseDouble(DisparoUnidade1[0]) + VelocidadeDisparo * (Double.parseDouble(DisparoUnidade1[0]) - Double.parseDouble(Temp0)) / ComprimentoDisparo / FramesPorSegundo);
+						DisparoUnidadeFeixe[0] = String.join(",", DisparoUnidade0);
 
-					DisparoUnidade1[1] = String.valueOf(Double.parseDouble(DisparoUnidade1[1]) + VelocidadeDisparo * (Double.parseDouble(DisparoUnidade1[1]) - Double.parseDouble(Temp1)) / ComprimentoDisparo / FramesPorSegundo);
+						DisparoUnidade1[0] = String.valueOf(Double.parseDouble(DisparoUnidade1[0]) + VelocidadeDisparo * (Double.parseDouble(DisparoUnidade1[0]) - Double.parseDouble(Temp0)) / ComprimentoDisparo / FramesPorSegundo);
 
-					DisparoUnidade1[2] = String.valueOf(Double.parseDouble(DisparoUnidade1[2]) + VelocidadeDisparo * (Double.parseDouble(DisparoUnidade1[2]) - Double.parseDouble(Temp2)) / ComprimentoDisparo / FramesPorSegundo);
+						DisparoUnidade1[1] = String.valueOf(Double.parseDouble(DisparoUnidade1[1]) + VelocidadeDisparo * (Double.parseDouble(DisparoUnidade1[1]) - Double.parseDouble(Temp1)) / ComprimentoDisparo / FramesPorSegundo);
 
-					DisparoUnidadeFeixe[1] = String.join(",", DisparoUnidade1);
+						DisparoUnidade1[2] = String.valueOf(Double.parseDouble(DisparoUnidade1[2]) + VelocidadeDisparo * (Double.parseDouble(DisparoUnidade1[2]) - Double.parseDouble(Temp2)) / ComprimentoDisparo / FramesPorSegundo);
 
-					DisparoArr[i] = String.join(";", DisparoUnidadeFeixe);
+						DisparoUnidadeFeixe[1] = String.join(",", DisparoUnidade1);
 
-					if (! ((Math.abs(Double.parseDouble(DisparoUnidade0[0]) - Xalvo) > Double.MAX_VALUE - MargemMaxValue) || (Math.abs(Double.parseDouble(DisparoUnidade0[1]) - Yalvo) > Double.MAX_VALUE - MargemMaxValue) || (Math.abs(Double.parseDouble(DisparoUnidade0[2]) - Zalvo) > Double.MAX_VALUE - MargemMaxValue))) if ((Math.abs(Double.parseDouble(DisparoUnidade0[0]) - Xalvo) <= LimiteXdisparo) && (Math.abs(Double.parseDouble(DisparoUnidade0[1]) - Yalvo) <= LimiteYdisparo) && (Math.abs(Double.parseDouble(DisparoUnidade0[2]) - Zalvo) <= LimiteZdisparo))
-						DisparoArr2[j++] = DisparoArr[i];
+						DisparoArr[i] = String.join(";", DisparoUnidadeFeixe);
+
+						if (! ((Math.abs(Double.parseDouble(DisparoUnidade0[0]) - Xalvo) > Double.MAX_VALUE - MargemMaxValue) || (Math.abs(Double.parseDouble(DisparoUnidade0[1]) - Yalvo) > Double.MAX_VALUE - MargemMaxValue) || (Math.abs(Double.parseDouble(DisparoUnidade0[2]) - Zalvo) > Double.MAX_VALUE - MargemMaxValue))) if ((Math.abs(Double.parseDouble(DisparoUnidade0[0]) - Xalvo) <= LimiteXdisparo) && (Math.abs(Double.parseDouble(DisparoUnidade0[1]) - Yalvo) <= LimiteYdisparo) && (Math.abs(Double.parseDouble(DisparoUnidade0[2]) - Zalvo) <= LimiteZdisparo))
+							DisparoArr2[j++] = DisparoArr[i];
+						}
+
+					String[] DisparoArr3 = new String[j];
+
+					for (i = 0; i < j; i++) DisparoArr3[i] = DisparoArr2[i];
+
+					Disparo = String.join("|", DisparoArr3).replaceAll(" ", "");
 					}
-
-				String[] DisparoArr3 = new String[j];
-
-				for (i = 0; i < j; i++) DisparoArr3[i] = DisparoArr2[i];
-
-				Disparo = String.join("|", DisparoArr3);
 
 				TempoR = Tempo;
 				}
