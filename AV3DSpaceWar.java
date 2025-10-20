@@ -93,9 +93,9 @@ public class AV3DSpaceWar extends JComponent
 	public static double LimiteVelocidadeXalvo = 10; // Default: 10.
 	public static double LimiteVelocidadeYalvo = 10; // Default: 10.
 	public static double LimiteVelocidadeZalvo = 10; // Default: 10.
-	public static double LimiteXdisparo = 1000; // Default: 1000.
-	public static double LimiteYdisparo = 1000; // Default: 1000.
-	public static double LimiteZdisparo = 1000; // Default: 1000.
+	public static double LimiteXdisparo = 2000; // Default: 1000.
+	public static double LimiteYdisparo = 2000; // Default: 1000.
+	public static double LimiteZdisparo = 2000; // Default: 1000.
 	public static int MaxDisparos = 5; // Default: 5.
 	public static int TempoRecarregar = 5; // Default: 5.
 	public static double VelocidadeDisparo = 300; // Default: 300.
