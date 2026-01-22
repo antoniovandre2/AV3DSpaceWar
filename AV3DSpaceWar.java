@@ -758,7 +758,7 @@ public class AV3DSpaceWar extends JComponent
 
 					yf = (int) (TamanhoPlanoY / 2 + TamanhoPlanoY / 2 * DistanciaTela * yft / df) - CorrecaoY;
 
-					if ((Math.acos(ProdutoEscalaro / di / DistanciaTela) < AnguloVisao + MargemAnguloVisao) && (Math.acos(ProdutoEscalard / df / DistanciaTela) < AnguloVisao + MargemAnguloVisao) && (Math.min(xi, Math.min(yi, Math.min(xf, yf))) > 0) && (Math.max(xi + CorrecaoX, xf + CorrecaoX) < TamanhoPlanoX) && (Math.max(yi + CorrecaoY, yf + CorrecaoY) < TamanhoPlanoY))
+					if ((Math.abs(Math.acos(ProdutoEscalaro / di / DistanciaTela)) < AnguloVisao + MargemAnguloVisao) && (Math.abs(Math.acos(ProdutoEscalard / df / DistanciaTela)) < AnguloVisao + MargemAnguloVisao))
 						comp.addLine(xi, yi, xf, yf, CorAlvo, i == EspacoLinhas.length - 1 ? Integer.MAX_VALUE : i);
 
 					if ((Math.acos(ProdutoEscalarXo / Math.sqrt(xo * xo + yo * yo)) * Math.cos(Rot) <= AnguloDirecaoIr) && (Math.acos(ProdutoEscalarXd / Math.sqrt(xd * xd + yd * yd)) * Math.cos(Rot) <= AnguloDirecaoIr))
